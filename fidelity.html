@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta Fedeltà - Grandi Firme di Fucà</title>
+    <meta name="description" content="Registrati al programma fedeltà Grandi Firme. Accumula punti ad ogni acquisto e ottieni sconti esclusivi.">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cookie-consent.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <style>
+        /* Fidelity page specific styles */
+        .fidelity-hero {
+            position: relative;
+            padding: 100px 0 50px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            text-align: center;
+            overflow: hidden;
+        }
+        .fidelity-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(212,168,75,0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(212,168,75,0.05) 0%, transparent 50%);
+        }
+        .fidelity-hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .fidelity-hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .fidelity-hero-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            color: #aaa;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Views */
+        .fidelity-view { display: none; }
+        .fidelity-view.active { display: block; }
+
+        /* Form section */
+        .fidelity-form-section {
+            padding: 60px 0;
+            background: #111;
+        }
+        .fidelity-form-wrapper {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            border: 1px solid rgba(212,168,75,0.2);
+            border-radius: 12px;
+            padding: 2.5rem;
+        }
+        .fidelity-form-wrapper h3 {
+            font-family: 'Playfair Display', serif;
+            color: #D4A84B;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .fidelity-form .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .fidelity-form label {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            color: #ccc;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .fidelity-form input[type="text"],
+        .fidelity-form input[type="email"],
+        .fidelity-form input[type="tel"],
+        .fidelity-form input[type="date"] {
+            width: 100%;
+            padding: 12px 16px;
+            background: #222;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        .fidelity-form input:focus {
+            outline: none;
+            border-color: #D4A84B;
+        }
+        .fidelity-form .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        .fidelity-form .checkbox-group input[type="checkbox"] {
+            margin-top: 3px;
+            accent-color: #D4A84B;
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+        .fidelity-form .checkbox-group span {
+            color: #aaa;
+            font-size: 0.82rem;
+            line-height: 1.4;
+        }
+        .fidelity-form .checkbox-group a {
+            color: #D4A84B;
+            text-decoration: underline;
+        }
+        .fidelity-form .form-error {
+            color: #ef4444;
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+        .fidelity-submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #D4A84B, #B8860B);
+            border: none;
+            border-radius: 8px;
+            color: #1a1a1a;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .fidelity-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(212,168,75,0.3);
+        }
+        .fidelity-submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .fidelity-global-error {
+            background: rgba(239,68,68,0.1);
+            border: 1px solid rgba(239,68,68,0.3);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #ef4444;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        /* Benefits */
+        .fidelity-benefits {
+            padding: 50px 0;
+            background: #0d0d0d;
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .benefit-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            background: #1a1a1a;
+            border: 1px solid rgba(212,168,75,0.15);
+            border-radius: 10px;
+            transition: border-color 0.3s;
+        }
+        .benefit-card:hover {
+            border-color: rgba(212,168,75,0.4);
+        }
+        .benefit-icon {
+            font-size: 2rem;
+            color: #D4A84B;
+            margin-bottom: 0.8rem;
+        }
+        .benefit-card h4 {
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .benefit-card p {
+            color: #888;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        /* Card view */
+        .fidelity-card-section {
+            padding: 60px 0;
+            background: #111;
+            min-height: 50vh;
+        }
+        .fidelity-card {
+            max-width: 420px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, #1a1a1a 0%, #111 100%);
+            border: 2px solid rgba(212,168,75,0.4);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .fidelity-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(212,168,75,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .fidelity-card .card-brand {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            color: #D4A84B;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+        .fidelity-card .card-title {
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        .fidelity-card .card-qr {
+            background: #fff;
+            padding: 12px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        .fidelity-card .card-qr canvas {
+            display: block;
+        }
+        .fidelity-card .card-code {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #D4A84B;
+            letter-spacing: 3px;
+            margin-bottom: 1.5rem;
+        }
+        .fidelity-card .card-name {
+            font-family: 'Montserrat', sans-serif;
+            color: #ccc;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .fidelity-card .card-divider {
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4A84B, transparent);
+            margin: 1.2rem auto;
+        }
+        .fidelity-card .card-points-label {
+            font-family: 'Montserrat', sans-serif;
+            color: #888;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.3rem;
+        }
+        .fidelity-card .card-points {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: #D4A84B;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .fidelity-card .card-points-suffix {
+            font-size: 1.2rem;
+            color: #888;
+            font-weight: 400;
+            margin-left: 5px;
+        }
+        .fidelity-card-info {
+            max-width: 420px;
+            margin: 1.5rem auto 0;
+            text-align: center;
+        }
+        .fidelity-card-info .bookmark-msg {
+            background: rgba(212,168,75,0.1);
+            border: 1px solid rgba(212,168,75,0.3);
+            border-radius: 10px;
+            padding: 14px 20px;
+            color: #D4A84B;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .fidelity-card-info .bookmark-msg i {
+            margin-right: 6px;
+        }
+        .fidelity-card-info .reward-info {
+            color: #888;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .fidelity-card-info .reward-info strong {
+            color: #D4A84B;
+        }
+
+        /* Error view */
+        .fidelity-error-section {
+            padding: 80px 0;
+            background: #111;
+            text-align: center;
+            min-height: 40vh;
+        }
+        .fidelity-error-icon {
+            font-size: 3rem;
+            color: #ef4444;
+            margin-bottom: 1rem;
+        }
+        .fidelity-error-section h2 {
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .fidelity-error-section p {
+            color: #888;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Loading spinner */
+        .fidelity-loading {
+            padding: 80px 0;
+            text-align: center;
+        }
+        .fidelity-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #333;
+            border-top-color: #D4A84B;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .fidelity-loading p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar" class="scrolled">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-text">Grandi Firme</span>
+                <span class="logo-sub">di Fucà</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Apri menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#chi-siamo" class="nav-link">Chi Siamo</a></li>
+                <li><a href="index.html#brand" class="nav-link">Brand</a></li>
+                <li><a href="index.html#collezioni" class="nav-link">Collezioni</a></li>
+                <li><a href="index.html#promozioni" class="nav-link">Promozioni</a></li>
+                <li><a href="gift-card.html" class="nav-link">Gift Card</a></li>
+                <li><a href="fidelity.html" class="nav-link active">Carta Fedeltà</a></li>
+                <li><a href="index.html#negozi" class="nav-link">Negozi</a></li>
+                <li><a href="index.html#contatti" class="nav-link">Contatti</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Loading view -->
+    <div id="loadingView" class="fidelity-view active">
+        <div class="fidelity-loading">
+            <div class="fidelity-spinner"></div>
+            <p>Caricamento...</p>
+        </div>
+    </div>
+
+    <!-- Registration view -->
+    <div id="registerView" class="fidelity-view">
+        <section class="fidelity-hero">
+            <div class="fidelity-hero-content">
+                <span class="section-tag">Programma Fedeltà</span>
+                <h1 class="fidelity-hero-title">La tua <span class="gold-text">Carta Fedeltà</span></h1>
+                <p class="fidelity-hero-subtitle">Registrati gratuitamente e accumula punti ad ogni acquisto nei nostri negozi.</p>
+            </div>
+        </section>
+
+        <section class="fidelity-benefits">
+            <div class="container">
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon"><i class="fas fa-star"></i></div>
+                        <h4>Accumula Punti</h4>
+                        <p id="benefitPoints">Guadagna punti ad ogni euro speso nei nostri negozi</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon"><i class="fas fa-gift"></i></div>
+                        <h4>Ottieni Premi</h4>
+                        <p id="benefitReward">Raggiungi la soglia e ricevi sconti esclusivi</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <h4>Sempre con Te</h4>
+                        <p>Card digitale sul tuo smartphone. Controlla il saldo punti in tempo reale</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="fidelity-form-section">
+            <div class="container">
+                <div class="fidelity-form-wrapper">
+                    <h3>Registrati Ora</h3>
+
+                    <div id="formError" class="fidelity-global-error"></div>
+
+                    <form id="fidelityForm" class="fidelity-form" novalidate>
+                        <div class="form-group">
+                            <label for="firstName">Nome *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                            <div class="form-error" id="firstNameError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName">Cognome *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                            <div class="form-error" id="lastNameError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                            <div class="form-error" id="emailError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Telefono</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="birthDate">Data di Nascita</label>
+                            <input type="date" id="birthDate" name="birthDate">
+                        </div>
+
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="privacyConsent" name="privacyConsent" required>
+                            <span>Accetto la <a href="privacy-policy.html" target="_blank">Privacy Policy</a> e acconsento al trattamento dei miei dati personali. *</span>
+                        </div>
+                        <div class="form-error" id="privacyError" style="margin-top:-0.5rem;margin-bottom:0.8rem"></div>
+
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="marketingConsent" name="marketingConsent">
+                            <span>Acconsento a ricevere comunicazioni promozionali e offerte esclusive via email e SMS.</span>
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="fidelity-submit-btn">
+                            <i class="fas fa-id-card"></i> Registrati
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Card view -->
+    <div id="cardView" class="fidelity-view">
+        <section class="fidelity-hero" style="padding-bottom:30px">
+            <div class="fidelity-hero-content">
+                <span class="section-tag">La Tua Tessera</span>
+                <h1 class="fidelity-hero-title">Carta <span class="gold-text">Fedeltà</span></h1>
+            </div>
+        </section>
+
+        <section class="fidelity-card-section">
+            <div class="container">
+                <div class="fidelity-card">
+                    <div class="card-brand" id="cardBrand"></div>
+                    <div class="card-title">CARTA FEDELTÀ</div>
+                    <div class="card-qr" id="cardQr"></div>
+                    <div class="card-code" id="cardCode"></div>
+                    <div class="card-name" id="cardName"></div>
+                    <div class="card-divider"></div>
+                    <div class="card-points-label">Punti Disponibili</div>
+                    <div>
+                        <span class="card-points" id="cardPoints">0</span>
+                        <span class="card-points-suffix">pt</span>
+                    </div>
+                </div>
+
+                <div class="fidelity-card-info">
+                    <div class="bookmark-msg" id="bookmarkMsg" style="display:none">
+                        <i class="fas fa-bookmark"></i> Salva questa pagina nei preferiti per controllare i tuoi punti in qualsiasi momento!
+                    </div>
+                    <div class="reward-info" id="rewardInfo"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Error view -->
+    <div id="errorView" class="fidelity-view">
+        <section class="fidelity-error-section">
+            <div class="container">
+                <div class="fidelity-error-icon"><i class="fas fa-exclamation-circle"></i></div>
+                <h2 id="errorTitle">Tessera Non Trovata</h2>
+                <p id="errorMessage">Il codice inserito non corrisponde a nessuna tessera attiva.</p>
+                <a href="fidelity.html" class="btn btn-primary">Registrati</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <div class="footer-logo">
+                            <span class="logo-text">Grandi Firme</span>
+                            <span class="logo-sub">di Fucà</span>
+                        </div>
+                        <p>Outlet abbigliamento firmato per bambini e ragazzi da 0 a 16 anni. I migliori brand a prezzi imbattibili.</p>
+                        <div class="footer-social">
+                            <a href="https://www.facebook.com/grandi.firme.di.fuca.0.16/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Link Rapidi</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="index.html#brand">Brand</a></li>
+                            <li><a href="gift-card.html">Gift Card</a></li>
+                            <li><a href="fidelity.html">Carta Fedeltà</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Info</h4>
+                        <ul>
+                            <li><a href="index.html#negozi">I Nostri Negozi</a></li>
+                            <li><a href="index.html#contatti">Contatti</a></li>
+                            <li><a href="cookie-policy.html">Cookie Policy</a></li>
+                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Orari</h4>
+                        <p>Lun - Sab</p>
+                        <p><strong>9:15 - 13:00</strong></p>
+                        <p><strong>16:30 - 20:15</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; <script>document.write(new Date().getFullYear())</script> Grandi Firme di Fucà. Tutti i diritti riservati. | <a href="cookie-policy.html">Cookie Policy</a> | <a href="privacy-policy.html">Privacy Policy</a></p>
+                <a href="https://www.enricomariacaruso.it" target="_blank" rel="noopener" title="Sviluppato da Enrico Maria Caruso" style="margin-top:10px;display:flex;align-items:center;justify-content:center;gap:6px;opacity:0.4;font-size:11px;text-decoration:none;color:inherit;"><span>Sviluppato da</span> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" height="18"><defs><linearGradient id="emcG" x1="0" y1="0" x2="120" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#7c5cfc"/><stop offset="45%" stop-color="#667eea"/><stop offset="100%" stop-color="#06d6a0"/></linearGradient><linearGradient id="emcIG" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#7c5cfc"/><stop offset="100%" stop-color="#06d6a0"/></linearGradient></defs><path d="M4,4 H24 L32,8 L24,12 H4 A4,4 0 0,1 4,4Z" fill="url(#emcIG)"/><path d="M4,15 H20 L28,19 L20,23 H4 A4,4 0 0,1 4,15Z" fill="url(#emcIG)" opacity="0.85"/><path d="M4,26 H24 L32,30 L24,34 H4 A4,4 0 0,1 4,26Z" fill="url(#emcIG)"/><text x="46" y="27" font-family="'Space Grotesk','Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="20" font-weight="700" fill="url(#emcG)" letter-spacing="3">EMC</text></svg></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookie consent (shared) -->
+    <script src="js/cookie-consent.js"></script>
+
+    <script>
+    (function() {
+        const API_BASE = 'https://api.grandifirmedifuca.it/api/v1/public/fidelity';
+
+        // Views
+        const loadingView = document.getElementById('loadingView');
+        const registerView = document.getElementById('registerView');
+        const cardView = document.getElementById('cardView');
+        const errorView = document.getElementById('errorView');
+
+        // Form elements
+        const form = document.getElementById('fidelityForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formError = document.getElementById('formError');
+
+        function showView(view) {
+            [loadingView, registerView, cardView, errorView].forEach(function(v) {
+                v.classList.remove('active');
+            });
+            view.classList.add('active');
+        }
+
+        function showError(title, message) {
+            document.getElementById('errorTitle').textContent = title;
+            document.getElementById('errorMessage').textContent = message;
+            showView(errorView);
+        }
+
+        function formatRewardType(type, value) {
+            if (type === 'SCONTO_PERCENTUALE') return 'uno sconto del ' + value + '%';
+            if (type === 'SCONTO_FISSO') return 'uno sconto di \u20AC' + value.toFixed(2).replace('.', ',');
+            if (type === 'BUONO') return 'un buono di \u20AC' + value.toFixed(2).replace('.', ',');
+            return 'un premio';
+        }
+
+        function renderCard(data) {
+            document.getElementById('cardBrand').textContent = data.tenant.name.toUpperCase();
+            document.getElementById('cardCode').textContent = data.fidelityCode;
+            document.getElementById('cardName').textContent = data.firstName + ' ' + data.lastName;
+            document.getElementById('cardPoints').textContent = data.activePoints || 0;
+
+            // Generate QR code
+            var qrContainer = document.getElementById('cardQr');
+            qrContainer.innerHTML = '';
+            QRCode.toCanvas(data.fidelityCode, { width: 160, margin: 0 }, function(err, canvas) {
+                if (!err && canvas) qrContainer.appendChild(canvas);
+            });
+
+            // Reward info
+            if (data.fidelity) {
+                var infoEl = document.getElementById('rewardInfo');
+                infoEl.innerHTML =
+                    'Guadagni <strong>' + data.fidelity.pointsPerEuro + ' punt' + (data.fidelity.pointsPerEuro === 1 ? 'o' : 'i') + '</strong> per ogni euro speso.<br>' +
+                    'A <strong>' + data.fidelity.rewardThreshold + ' punti</strong> ricevi ' + formatRewardType(data.fidelity.rewardType, data.fidelity.rewardValue) + '.';
+            }
+
+            showView(cardView);
+        }
+
+        // Check URL params for direct card access
+        var urlParams = new URLSearchParams(window.location.search);
+        var codeParam = urlParams.get('code');
+
+        if (codeParam) {
+            // Direct card view
+            fetch(API_BASE + '/card/' + encodeURIComponent(codeParam), {
+                headers: { 'X-Tenant-Domain': 'www.grandifirmedifuca.it' }
+            })
+            .then(function(res) {
+                if (!res.ok) throw new Error('not_found');
+                return res.json();
+            })
+            .then(function(data) {
+                renderCard(data);
+            })
+            .catch(function() {
+                showError('Tessera Non Trovata', 'Il codice inserito non corrisponde a nessuna tessera attiva.');
+            });
+        } else {
+            // Registration view - load config first
+            fetch(API_BASE + '/config', {
+                headers: { 'X-Tenant-Domain': 'www.grandifirmedifuca.it' }
+            })
+            .then(function(res) {
+                if (!res.ok) throw new Error('config_error');
+                return res.json();
+            })
+            .then(function(config) {
+                // Update benefit texts with actual config values
+                if (config.fidelity) {
+                    document.getElementById('benefitPoints').textContent =
+                        'Guadagna ' + config.fidelity.pointsPerEuro + ' punt' + (config.fidelity.pointsPerEuro === 1 ? 'o' : 'i') + ' per ogni euro speso nei nostri negozi';
+                    document.getElementById('benefitReward').textContent =
+                        'A ' + config.fidelity.rewardThreshold + ' punti ricevi ' + formatRewardType(config.fidelity.rewardType, config.fidelity.rewardValue);
+                }
+                showView(registerView);
+            })
+            .catch(function() {
+                showError('Servizio Non Disponibile', 'Il programma fedeltà non è al momento attivo. Riprova più tardi.');
+            });
+        }
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Reset errors
+            formError.style.display = 'none';
+            document.querySelectorAll('.form-error').forEach(function(el) { el.style.display = 'none'; });
+
+            var firstName = document.getElementById('firstName').value.trim();
+            var lastName = document.getElementById('lastName').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var phone = document.getElementById('phone').value.trim();
+            var birthDate = document.getElementById('birthDate').value;
+            var privacyConsent = document.getElementById('privacyConsent').checked;
+            var marketingConsent = document.getElementById('marketingConsent').checked;
+
+            // Validate
+            var hasError = false;
+            if (firstName.length < 2) {
+                document.getElementById('firstNameError').textContent = 'Nome obbligatorio (min 2 caratteri)';
+                document.getElementById('firstNameError').style.display = 'block';
+                hasError = true;
+            }
+            if (lastName.length < 2) {
+                document.getElementById('lastNameError').textContent = 'Cognome obbligatorio (min 2 caratteri)';
+                document.getElementById('lastNameError').style.display = 'block';
+                hasError = true;
+            }
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('emailError').textContent = 'Email non valida';
+                document.getElementById('emailError').style.display = 'block';
+                hasError = true;
+            }
+            if (!privacyConsent) {
+                document.getElementById('privacyError').textContent = 'Devi accettare la privacy policy per procedere';
+                document.getElementById('privacyError').style.display = 'block';
+                hasError = true;
+            }
+            if (hasError) return;
+
+            // Submit
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registrazione in corso...';
+
+            var body = {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                privacyConsent: true,
+                marketingConsent: marketingConsent
+            };
+            if (phone) body.phone = phone;
+            if (birthDate) body.birthDate = birthDate;
+
+            fetch(API_BASE + '/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Tenant-Domain': 'www.grandifirmedifuca.it'
+                },
+                body: JSON.stringify(body)
+            })
+            .then(function(res) {
+                if (!res.ok) return res.json().then(function(err) { throw err; });
+                return res.json();
+            })
+            .then(function(data) {
+                // Update URL to bookmarkable card URL
+                var newUrl = window.location.pathname + '?code=' + data.fidelityCode;
+                window.history.replaceState({}, '', newUrl);
+
+                // Show bookmark message
+                document.getElementById('bookmarkMsg').style.display = 'block';
+
+                renderCard(data);
+            })
+            .catch(function(err) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-id-card"></i> Registrati';
+                var msg = (err && err.error) || 'Errore durante la registrazione. Riprova.';
+                formError.textContent = msg;
+                formError.style.display = 'block';
+            });
+        });
+
+        // Nav toggle
+        var navToggle = document.getElementById('navToggle');
+        var navMenu = document.getElementById('navMenu');
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', function() {
+                navToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        }
+    })();
+    </script>
+</body>
+</html>
