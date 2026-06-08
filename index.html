@@ -73,6 +73,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/gift-card.css">
     <link rel="stylesheet" href="css/cookie-consent.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Che prodotti vendete?","acceptedAnswer":{"@type":"Answer","text":"Abbigliamento e calzature di marca per bambini e ragazzi, selezionati e proposti a prezzi outlet."}},{"@type":"Question","name":"Quali fasce d’età coprite?","acceptedAnswer":{"@type":"Answer","text":"Dalla prima infanzia ai ragazzi, con un’ampia scelta di taglie e modelli per ogni stagione."}},{"@type":"Question","name":"Dove si trova il negozio?","acceptedAnswer":{"@type":"Answer","text":"Siamo nella zona di Racalmuto e Grotte (AG). Contattaci per l’indirizzo esatto e gli orari di apertura."}},{"@type":"Question","name":"Arrivano nuove collezioni?","acceptedAnswer":{"@type":"Answer","text":"Sì, rinnoviamo continuamente l’assortimento con le nuove stagioni e le occasioni migliori."}},{"@type":"Question","name":"Posso verificare disponibilità e taglie di un capo?","acceptedAnswer":{"@type":"Answer","text":"Certo: scrivici e controlliamo subito disponibilità, taglia e prezzo del capo che ti interessa."}},{"@type":"Question","name":"Come posso contattarvi?","acceptedAnswer":{"@type":"Answer","text":"Passa in negozio oppure scrivici: siamo felici di aiutarti a trovare il capo giusto."}}]}</script>
 </head>
 <body>
     <!-- Preloader -->
@@ -607,7 +608,37 @@
     </section>
 
     <!-- Footer -->
-    <footer id="footer">
+    
+<!-- FAQ (EMC) -->
+<section class="emcfaq-sec" id="faq">
+  <div class="emcfaq-wrap">
+    <p class="emcfaq-eye">FAQ</p>
+    <h2 class="emcfaq-title">Domande frequenti</h2>
+    <div class="emcfaq-list">
+      <details><summary>Che prodotti vendete?</summary><p>Abbigliamento e calzature di marca per bambini e ragazzi, selezionati e proposti a prezzi outlet.</p></details>
+      <details><summary>Quali fasce d’età coprite?</summary><p>Dalla prima infanzia ai ragazzi, con un’ampia scelta di taglie e modelli per ogni stagione.</p></details>
+      <details><summary>Dove si trova il negozio?</summary><p>Siamo nella zona di Racalmuto e Grotte (AG). Contattaci per l’indirizzo esatto e gli orari di apertura.</p></details>
+      <details><summary>Arrivano nuove collezioni?</summary><p>Sì, rinnoviamo continuamente l’assortimento con le nuove stagioni e le occasioni migliori.</p></details>
+      <details><summary>Posso verificare disponibilità e taglie di un capo?</summary><p>Certo: scrivici e controlliamo subito disponibilità, taglia e prezzo del capo che ti interessa.</p></details>
+      <details><summary>Come posso contattarvi?</summary><p>Passa in negozio oppure scrivici: siamo felici di aiutarti a trovare il capo giusto.</p></details>
+    </div>
+  </div>
+</section>
+<style>
+.emcfaq-sec{background:#faf7f0;padding:72px 20px;font-family:'Montserrat',sans-serif}
+.emcfaq-wrap{max-width:820px;margin:0 auto}
+.emcfaq-eye{text-align:center;text-transform:uppercase;letter-spacing:.2em;font-size:13px;font-weight:700;color:#8B6508;margin:0 0 8px}
+.emcfaq-title{text-align:center;font-family:'Playfair Display',Georgia,serif;font-size:34px;color:#2a2620;margin:0 0 30px}
+.emcfaq-list details{background:#ffffff;border:1px solid #ece4d3;border-radius:14px;margin-bottom:12px;padding:0 22px}
+.emcfaq-list summary{cursor:pointer;list-style:none;padding:18px 0;font-weight:700;color:#2a2620;display:flex;justify-content:space-between;gap:14px;align-items:center;font-size:17px}
+.emcfaq-list summary::-webkit-details-marker{display:none}
+.emcfaq-list summary::after{content:"+";font-size:24px;font-weight:400;color:#B8860B;transition:.2s;flex-shrink:0}
+.emcfaq-list details[open] summary::after{transform:rotate(45deg)}
+.emcfaq-list details p{padding:0 0 18px;margin:0;color:#6a6253;line-height:1.65}
+@media(max-width:600px){.emcfaq-title{font-size:27px}}
+</style>
+
+<footer id="footer">
         <div class="footer-top">
             <div class="container">
                 <div class="footer-grid">
