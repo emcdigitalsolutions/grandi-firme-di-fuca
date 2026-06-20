@@ -143,48 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // === Contact Form Handler ===
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const message = document.getElementById('message').value.trim();
-
-            if (!name || !email || !message) return;
-
-            const btn = contactForm.querySelector('button[type="submit"]');
-            const originalHTML = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = '<span>Invio in corso...</span> <i class="fas fa-spinner fa-spin"></i>';
-
-            try {
-                const response = await fetch('https://api.grandifirmedifuca.it/api/v1/public/contact', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, phone: phone || undefined, message }),
-                });
-
-                if (!response.ok) throw new Error('Errore invio');
-
-                btn.innerHTML = '<span>Messaggio Inviato!</span> <i class="fas fa-check"></i>';
-                btn.style.background = '#2d8a4e';
-                contactForm.reset();
-            } catch (err) {
-                btn.innerHTML = '<span>Errore, riprova</span> <i class="fas fa-times"></i>';
-                btn.style.background = '#dc3545';
-            }
-
-            setTimeout(() => {
-                btn.innerHTML = originalHTML;
-                btn.style.background = '';
-                btn.disabled = false;
-            }, 3000);
-        });
-    }
+    // Contact form: gestione in <script> ISOLATO in fondo a index.html
 
     // === Dynamic News from JSON ===
     const newsGrid = document.getElementById('news-grid');

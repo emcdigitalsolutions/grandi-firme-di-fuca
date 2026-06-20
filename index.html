@@ -590,7 +590,7 @@
                             <label for="email">Email</label>
                         </div>
                         <div class="form-group">
-                            <input type="tel" id="phone" placeholder="Telefono (opzionale)">
+                            <input type="tel" id="phone" inputmode="numeric" autocomplete="tel" pattern="[0-9+ ]*" maxlength="20" oninput="this.value=this.value.replace(/[^0-9+ ]/g,'')" placeholder="Telefono (opzionale)">
                             <label for="phone">Telefono</label>
                         </div>
                         <div class="form-group">
@@ -601,6 +601,7 @@
                             <span>Invia Messaggio</span>
                             <i class="fas fa-paper-plane"></i>
                         </button>
+                        <div class="form-note" id="formNote"></div>
                     </form>
                 </div>
             </div>
@@ -722,5 +723,47 @@
 
     <script src="js/main.js"></script>
     <script src="js/cookie-consent.js"></script>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+    <style>
+    .form-note{font-size:14px;margin-top:12px;padding:11px 14px;border-radius:10px;display:none;font-weight:600}
+    .form-note.ok{display:block;background:rgba(45,138,78,.14);color:#2d8a4e}
+    .form-note.err{display:block;background:rgba(220,53,69,.12);color:#c0392b}
+    #toast{position:fixed;left:50%;top:16px;transform:translate(-50%,-24px);max-width:92%;padding:15px 22px;border-radius:14px;font-size:15px;font-weight:700;color:#fff;text-align:center;box-shadow:0 14px 38px rgba(0,0,0,.28);z-index:99999;opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease}
+    #toast.show{opacity:1;transform:translate(-50%,0)}
+    #toast.ok{background:#2d8a4e}#toast.err{background:#c0392b}
+    </style>
+    <!-- Contact form: script ISOLATO e indipendente (backend dedicato Grandi Firme / StockflowERP). -->
+    <script>
+    (function(){
+      function init(){
+        var form=document.getElementById('contactForm');
+        if(!form) return;
+        var note=document.getElementById('formNote');
+        var API='https://api.grandifirmedifuca.it/api/v1/public/contact';
+        var OK='Grazie! Abbiamo ricevuto il tuo messaggio, ti ricontatteremo al più presto.';
+        var ERR='Ops, qualcosa è andato storto. Riprova o scrivici su WhatsApp.';
+        var REQ='Compila i campi obbligatori (nome, email e messaggio).';
+        function val(id){var el=document.getElementById(id);return el?el.value.trim():'';}
+        function showToast(msg,type){var t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.className=type;setTimeout(function(){t.classList.add('show');},10);clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},6000);}
+        function showNote(type,msg){if(note){note.className='form-note '+type;note.textContent=msg;}showToast(msg,type);try{if(note)note.scrollIntoView({behavior:'smooth',block:'center'});}catch(e){}}
+        var btn=form.querySelector('button[type="submit"]');
+        var btnLabel=btn?btn.innerHTML:'';
+        form.addEventListener('submit',function(e){
+          e.preventDefault();
+          var honey=form.querySelector('[name="_honey"]');
+          if(honey&&honey.value) return;
+          var name=val('name'), email=val('email'), message=val('message'), phone=val('phone');
+          if(!name||!email||!message){showNote('err',REQ);return;}
+          if(btn){btn.disabled=true;btn.innerHTML='<span>Invio in corso...</span> <i class="fas fa-spinner fa-spin"></i>';}
+          fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,email:email,phone:phone||undefined,message:message})})
+          .then(function(r){if(!r.ok)throw new Error('bad');showNote('ok',OK);form.reset();})
+          .catch(function(){showNote('err',ERR);})
+          .finally(function(){if(btn){btn.disabled=false;btn.innerHTML=btnLabel;}});
+        });
+      }
+      if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
+    })();
+    </script>
 </body>
 </html>
