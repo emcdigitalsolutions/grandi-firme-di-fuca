@@ -597,6 +597,10 @@
                             <textarea id="message" rows="4" placeholder="Il tuo messaggio..." required></textarea>
                             <label for="message">Messaggio</label>
                         </div>
+                        <div class="form-group-checkbox" style="display:flex;align-items:flex-start;gap:10px;font-size:.88rem;line-height:1.5;margin-bottom:6px">
+                            <input type="checkbox" id="privacy" required style="width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:#D4A84B">
+                            <label for="privacy" style="margin:0">Ho letto e accetto la <a href="privacy-policy.html" target="_blank" style="color:#D4A84B;font-weight:600">Privacy Policy</a>. Autorizzo il trattamento dei miei dati personali ai sensi del Regolamento UE 2016/679 (GDPR). *</label>
+                        </div>
                         <button type="submit" class="btn btn-primary btn-block">
                             <span>Invia Messaggio</span>
                             <i class="fas fa-paper-plane"></i>
@@ -740,10 +744,11 @@
         var form=document.getElementById('contactForm');
         if(!form) return;
         var note=document.getElementById('formNote');
-        var API='https://api.grandifirmedifuca.it/api/v1/public/contact';
+        var API='https://script.google.com/macros/s/AKfycbxLCgN0-mHN86Dk37a5m-p2A3DgMjc8b__aCO_9oBA_amLUn5MlipebKalo5qNIoSWl/exec';
         var OK='Grazie! Abbiamo ricevuto il tuo messaggio, ti ricontatteremo al più presto.';
         var ERR='Ops, qualcosa è andato storto. Riprova o scrivici su WhatsApp.';
         var REQ='Compila i campi obbligatori (nome, email e messaggio).';
+        var PRIV='Per inviare, accetta la Privacy Policy.';
         function val(id){var el=document.getElementById(id);return el?el.value.trim():'';}
         function showToast(msg,type){var t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.className=type;setTimeout(function(){t.classList.add('show');},10);clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},6000);}
         function showNote(type,msg){if(note){note.className='form-note '+type;note.textContent=msg;}showToast(msg,type);try{if(note)note.scrollIntoView({behavior:'smooth',block:'center'});}catch(e){}}
@@ -755,9 +760,11 @@
           if(honey&&honey.value) return;
           var name=val('name'), email=val('email'), message=val('message'), phone=val('phone');
           if(!name||!email||!message){showNote('err',REQ);return;}
+          var privacy=document.getElementById('privacy');
+          if(privacy&&!privacy.checked){showNote('err',PRIV);return;}
           if(btn){btn.disabled=true;btn.innerHTML='<span>Invio in corso...</span> <i class="fas fa-spinner fa-spin"></i>';}
-          fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,email:email,phone:phone||undefined,message:message})})
-          .then(function(r){if(!r.ok)throw new Error('bad');showNote('ok',OK);form.reset();})
+          fetch(API,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({site:'grandifirme',name:name,email:email,phone:phone,message:message})})
+          .then(function(){showNote('ok',OK);form.reset();})
           .catch(function(){showNote('err',ERR);})
           .finally(function(){if(btn){btn.disabled=false;btn.innerHTML=btnLabel;}});
         });
