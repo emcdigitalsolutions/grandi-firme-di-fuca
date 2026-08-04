@@ -1475,3 +1475,212 @@ ul { list-style: none; }
         justify-content: center;
     }
 }
+
+/* === Vetrina / In Negozio Ora === */
+.vetrina-section .section-subtitle {
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.vetrina-masonry {
+    column-count: 4;
+    column-gap: 1.25rem;
+}
+
+.vetrina-item {
+    position: relative;
+    display: block;
+    margin: 0 0 1.25rem;
+    break-inside: avoid;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(212, 168, 75, 0.12);
+    background: var(--dark-soft);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s, border-color 0.4s;
+}
+
+.vetrina-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vetrina-item:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212, 168, 75, 0.6);
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55);
+}
+
+.vetrina-item:hover img {
+    transform: scale(1.05);
+}
+
+.vetrina-zoom {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--dark);
+    background: var(--gold-gradient);
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.35s, transform 0.35s;
+    pointer-events: none;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.vetrina-item:hover .vetrina-zoom {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.vetrina-badge {
+    position: absolute;
+    top: 0.9rem;
+    left: 0.9rem;
+    padding: 0.32rem 0.7rem;
+    border-radius: 999px;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #fff;
+    background: linear-gradient(135deg, #d23b3b, #a11f1f);
+    box-shadow: 0 6px 16px rgba(160, 30, 30, 0.45);
+    z-index: 2;
+}
+
+/* Lightbox */
+.vlb {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3.5rem 1rem;
+    background: rgba(10, 10, 10, 0.94);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.vlb[hidden] {
+    display: none;
+}
+
+.vlb.is-open {
+    opacity: 1;
+}
+
+.vlb-stage {
+    margin: 0;
+    max-width: min(92vw, 720px);
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    transform: scale(0.96);
+    transition: transform 0.3s ease;
+}
+
+.vlb.is-open .vlb-stage {
+    transform: scale(1);
+}
+
+.vlb-stage img {
+    max-width: 100%;
+    max-height: 78vh;
+    width: auto;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+    object-fit: contain;
+}
+
+.vlb-caption {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    color: var(--gold-light);
+    text-align: center;
+    letter-spacing: 0.3px;
+}
+
+.vlb-close,
+.vlb-nav {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(212, 168, 75, 0.35);
+    border-radius: 50%;
+    transition: background 0.25s, color 0.25s, transform 0.25s;
+}
+
+.vlb-close {
+    top: 1.2rem;
+    right: 1.2rem;
+    width: 46px;
+    height: 46px;
+    font-size: 1.2rem;
+}
+
+.vlb-nav {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    font-size: 1.3rem;
+}
+
+.vlb-prev { left: 1.2rem; }
+.vlb-next { right: 1.2rem; }
+
+.vlb-close:hover,
+.vlb-nav:hover {
+    background: var(--gold-gradient);
+    color: var(--dark);
+}
+
+.vlb-nav:hover { transform: translateY(-50%) scale(1.08); }
+
+.vlb-counter {
+    position: absolute;
+    bottom: 1.3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+@media (max-width: 1024px) {
+    .vetrina-masonry { column-count: 3; }
+}
+
+@media (max-width: 768px) {
+    .vetrina-masonry { column-count: 2; column-gap: 1rem; }
+    .vetrina-item { margin-bottom: 1rem; }
+    .vlb-nav { width: 44px; height: 44px; font-size: 1.1rem; }
+    .vlb-prev { left: 0.5rem; }
+    .vlb-next { right: 0.5rem; }
+}
+
+@media (max-width: 420px) {
+    .vetrina-masonry { column-count: 1; }
+}
