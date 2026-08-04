@@ -272,7 +272,10 @@
     <script>
     (function() {
         // === Config ===
-        const API_BASE = 'https://api.grandifirmedifuca.it/api/v1/public/gift-cards';
+        const API_BASE = 'https://api-erp.enricomariacaruso.it/api/v1/public/gift-cards';
+        // Identifica il tenant lato backend (chiamata cross-domain: l'hostname dell'API
+        // non è quello del sito, quindi passiamo esplicitamente il dominio del negozio).
+        const TENANT_DOMAIN = 'grandifirmedifuca.it';
 
         // === DOM Elements ===
         const form = document.getElementById('giftCardForm');
@@ -402,7 +405,7 @@
             try {
                 var response = await fetch(API_BASE + '/checkout-session', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json', 'X-Tenant-Domain': TENANT_DOMAIN },
                     body: JSON.stringify({
                         amount: selectedAmount,
                         purchaserName: purchaserName,
@@ -461,7 +464,9 @@
 
             async function checkStatus() {
                 try {
-                    var response = await fetch(API_BASE + '/status/' + sessionId);
+                    var response = await fetch(API_BASE + '/status/' + sessionId, {
+                        headers: { 'X-Tenant-Domain': TENANT_DOMAIN },
+                    });
                     var data = await response.json();
 
                     if (data.status === 'completed' && data.giftCard) {
