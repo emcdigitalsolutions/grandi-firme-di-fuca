@@ -1,5 +1,5 @@
 """
-Server locale per Grandi Firme di Fuca.
+Server locale per Grandi Firme di Fucà.
 Serve i file statici e gestisce il salvataggio delle notizie e autenticazione.
 Avviare con: python server.py
 """
@@ -781,7 +781,7 @@ def main():
     with socketserver.TCPServer(("", PORT), SitoHandler) as httpd:
         url = f"http://localhost:{PORT}"
         print("=" * 50)
-        print("  Grandi Firme di Fuca")
+        print("  Grandi Firme di Fucà")
         print("  Server locale avviato")
         print(f"  Sito:    {url}")
         print(f"  Admin:   {url}/admin.html")
