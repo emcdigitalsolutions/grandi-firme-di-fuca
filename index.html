@@ -745,9 +745,10 @@
                             <input type="checkbox" id="privacy" required style="width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:#D4A84B">
                             <label for="privacy" style="margin:0">Ho letto e accetto la <a href="privacy-policy.html" target="_blank" style="color:#D4A84B;font-weight:600">Privacy Policy</a>. Autorizzo il trattamento dei miei dati personali ai sensi del Regolamento UE 2016/679 (GDPR). *</label>
                         </div>
+                        <p style="font-size:.84rem;line-height:1.5;opacity:.8;margin:0 0 10px">Premendo il pulsante si apre il tuo programma di posta con il messaggio già pronto: controllalo e invialo tu. Il sito non invia né conserva i tuoi dati.</p>
                         <button type="submit" class="btn btn-primary btn-block">
-                            <span>Invia Messaggio</span>
-                            <i class="fas fa-paper-plane"></i>
+                            <span>Scrivi con la tua email</span>
+                            <i class="fas fa-envelope"></i>
                         </button>
                         <div class="form-note" id="formNote"></div>
                     </form>
@@ -882,16 +883,16 @@
     #toast.show{opacity:1;transform:translate(-50%,0)}
     #toast.ok{background:#2d8a4e}#toast.err{background:#c0392b}
     </style>
-    <!-- Contact form: script ISOLATO e indipendente (backend dedicato Grandi Firme / StockflowERP). -->
+    <!-- Contact form: script ISOLATO, nessun backend: apre il programma di posta dell'utente (mailto). -->
     <script>
     (function(){
       function init(){
         var form=document.getElementById('contactForm');
         if(!form) return;
         var note=document.getElementById('formNote');
-        var API='https://script.google.com/macros/s/AKfycbxLCgN0-mHN86Dk37a5m-p2A3DgMjc8b__aCO_9oBA_amLUn5MlipebKalo5qNIoSWl/exec';
-        var OK='Grazie! Abbiamo ricevuto il tuo messaggio, ti ricontatteremo al più presto.';
-        var ERR='Ops, qualcosa è andato storto. Riprova o scrivici su WhatsApp.';
+        // Nessun server intermedio: il modulo apre il programma di posta dell'utente con il messaggio pronto.
+        var TO='info@grandifirmedifuca.it';
+        var OK='Si è aperto il tuo programma di posta con il messaggio pronto: controllalo e premi Invia. Se non si apre nulla, scrivici a '+TO+' o su WhatsApp.';
         var REQ='Compila i campi obbligatori (nome, email e messaggio).';
         var PRIV='Per inviare, accetta la Privacy Policy.';
         function val(id){var el=document.getElementById(id);return el?el.value.trim():'';}
@@ -907,11 +908,9 @@
           if(!name||!email||!message){showNote('err',REQ);return;}
           var privacy=document.getElementById('privacy');
           if(privacy&&!privacy.checked){showNote('err',PRIV);return;}
-          if(btn){btn.disabled=true;btn.innerHTML='<span>Invio in corso...</span> <i class="fas fa-spinner fa-spin"></i>';}
-          fetch(API,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({site:'grandifirme',name:name,email:email,phone:phone,message:message})})
-          .then(function(){showNote('ok',OK);form.reset();})
-          .catch(function(){showNote('err',ERR);})
-          .finally(function(){if(btn){btn.disabled=false;btn.innerHTML=btnLabel;}});
+          var corpo=message+'\n\n— '+name+'\nEmail: '+email+(phone?'\nTelefono: '+phone:'');
+          window.location.href='mailto:info@grandifirmedifuca.it?subject='+encodeURIComponent('Richiesta dal sito — '+name)+'&body='+encodeURIComponent(corpo);
+          showNote('ok',OK);
         });
       }
       if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
