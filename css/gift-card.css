@@ -355,6 +355,27 @@
     font-size: 0.95rem;
 }
 
+.gc-summary-row[hidden],
+.gc-summary-note[hidden] {
+    display: none;
+}
+
+.gc-summary-note {
+    margin: 0.75rem 0 0;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #aaa;
+}
+
+.gc-summary-note a {
+    color: var(--gold-light);
+}
+
+.gc-summary-loading #summaryFee,
+.gc-summary-loading #summaryTotal {
+    opacity: 0.5;
+}
+
 .gc-summary-total {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin-top: 0.5rem;

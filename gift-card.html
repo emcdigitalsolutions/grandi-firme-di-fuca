@@ -167,15 +167,20 @@
                     <div class="gc-char-count"><span id="charCount">0</span>/500</div>
 
                     <!-- Riepilogo -->
-                    <div class="gc-summary">
+                    <div class="gc-summary" aria-live="polite">
                         <div class="gc-summary-row">
-                            <span>Importo Gift Card</span>
+                            <span id="summaryAmountLabel">Importo Gift Card</span>
                             <span id="summaryAmount">&euro;50,00</span>
+                        </div>
+                        <div class="gc-summary-row" id="summaryFeeRow" hidden>
+                            <span>Costo di emissione</span>
+                            <span id="summaryFee">&euro;0,00</span>
                         </div>
                         <div class="gc-summary-row gc-summary-total">
                             <span>Totale</span>
                             <span id="summaryTotal">&euro;50,00</span>
                         </div>
+                        <p class="gc-summary-note" id="summaryFeeNote" hidden>Il costo di emissione è uguale per ogni metodo di pagamento, non è rimborsabile e non fa parte del valore spendibile della gift card. <a href="terms-of-service.html#gift-card-costo-emissione">Condizioni</a></p>
                     </div>
 
                     <!-- Submit -->
@@ -265,6 +270,7 @@
         <div class="footer-bottom">
             <div class="container">
                 <p>&copy; <script>document.write(new Date().getFullYear())</script> Grandi Firme di Fucà. Tutti i diritti riservati. | <a href="cookie-policy.html">Cookie Policy</a> | <a href="privacy-policy.html">Privacy Policy</a></p>
+                <p class="footer-legal">Grandi Firme di Fucà è un'insegna di <strong>FORTUNA S.R.L.</strong> · P.IVA 03111700849 · Sede legale C.da Calminello snc, 92020 Racalmuto (AG)</p>
                 <a href="https://www.emcdigitalsolutions.it" target="_blank" rel="noopener" title="Progettato e Sviluppato da EMC Digital Solutions" style="margin-top:10px;display:flex;align-items:center;justify-content:center;gap:6px;opacity:0.4;font-size:11px;text-decoration:none;color:inherit;"><span>Progettato e Sviluppato da</span> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" height="18"><defs><linearGradient id="emcG" x1="0" y1="0" x2="120" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#D4A84B"/><stop offset="45%" stop-color="#B8860B"/><stop offset="100%" stop-color="#f0ece2"/></linearGradient><linearGradient id="emcIG" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#D4A84B"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs><path d="M4,4 H24 L32,8 L24,12 H4 A4,4 0 0,1 4,4Z" fill="url(#emcIG)"/><path d="M4,15 H20 L28,19 L20,23 H4 A4,4 0 0,1 4,15Z" fill="url(#emcIG)" opacity="0.85"/><path d="M4,26 H24 L32,30 L24,34 H4 A4,4 0 0,1 4,26Z" fill="url(#emcIG)"/><text x="46" y="27" font-family="'Space Grotesk','Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="20" font-weight="700" fill="url(#emcG)" letter-spacing="3">EMC</text></svg></a>
                 <p style="margin-top:6px;font-size:11px;letter-spacing:0.04em;opacity:0.75;">Gestionale: <a href="https://sartonero.it/" target="_blank" rel="noopener" title="Sartonero, gestionale per negozi di abbigliamento" style="color:#D4A84B;text-decoration:none;">Sartonero</a></p>
             </div>
@@ -294,7 +300,12 @@
         const customAmountInput = document.getElementById('customAmount');
         const previewAmount = document.getElementById('previewAmount');
         const summaryAmount = document.getElementById('summaryAmount');
+        const summaryAmountLabel = document.getElementById('summaryAmountLabel');
         const summaryTotal = document.getElementById('summaryTotal');
+        const summaryBox = document.querySelector('.gc-summary');
+        const summaryFeeRow = document.getElementById('summaryFeeRow');
+        const summaryFee = document.getElementById('summaryFee');
+        const summaryFeeNote = document.getElementById('summaryFeeNote');
 
         // Preview
         const previewRecipient = document.getElementById('previewRecipient');
@@ -329,11 +340,57 @@
             return '\u20AC' + amount.toFixed(2).replace('.', ',');
         }
 
+        // === Costo di emissione (calcolato SOLO dal gestionale) ===
+        // Se il negozio lo applica, il riepilogo mostra Valore / Costo di emissione / Totale prima
+        // del pagamento. Il sito non calcola nulla: mostra ciò che risponde il server e al checkout
+        // gli rimanda il totale mostrato, così il cliente paga esattamente quello che ha visto.
+        var quote = null;        // { amount, enabled, issueFee, total } dell'importo corrente
+        var quoteSeq = 0;
+        var quoteTimer = null;
+
+        function renderSummary() {
+            var feeOn = !!(quote && quote.amount === selectedAmount && quote.enabled && quote.issueFee > 0);
+            summaryAmountLabel.textContent = feeOn ? 'Valore gift card' : 'Importo Gift Card';
+            summaryAmount.textContent = formatEuro(selectedAmount);
+            summaryFeeRow.hidden = !feeOn;
+            summaryFeeNote.hidden = !feeOn;
+            if (feeOn) summaryFee.textContent = formatEuro(quote.issueFee);
+            summaryTotal.textContent = formatEuro(feeOn ? quote.total : selectedAmount);
+        }
+
+        /** Chiede al gestionale costo e totale per l'importo; risolve con la quotazione o null. */
+        function fetchQuote(amount) {
+            var seq = ++quoteSeq;
+            summaryBox.classList.add('gc-summary-loading');
+            return fetch(API_BASE + '/issue-fee?amount=' + encodeURIComponent(amount), {
+                headers: { 'X-Tenant-Domain': TENANT_DOMAIN },
+            }).then(function(res) {
+                // Gestionale senza questa funzione: nessun costo di emissione.
+                if (res.status === 404) return { enabled: false, issueFee: 0, total: amount };
+                if (!res.ok) throw new Error('quote ' + res.status);
+                return res.json();
+            }).then(function(data) {
+                var q = { amount: amount, enabled: !!data.enabled, issueFee: Number(data.issueFee) || 0, total: Number(data.total) || amount };
+                if (seq === quoteSeq) { quote = q; renderSummary(); }
+                return q;
+            }).catch(function() {
+                if (seq === quoteSeq) { quote = null; renderSummary(); }
+                return null;
+            }).finally(function() {
+                if (seq === quoteSeq) summaryBox.classList.remove('gc-summary-loading');
+            });
+        }
+
+        function scheduleQuote(amount) {
+            clearTimeout(quoteTimer);
+            quoteTimer = setTimeout(function() { fetchQuote(amount); }, 250);
+        }
+
         function updateAmount(amount) {
             selectedAmount = amount;
             previewAmount.textContent = formatEuro(amount);
-            summaryAmount.textContent = formatEuro(amount);
-            summaryTotal.textContent = formatEuro(amount);
+            renderSummary();
+            scheduleQuote(amount);
         }
 
         amountBtns.forEach(function(btn) {
@@ -352,6 +409,9 @@
                 updateAmount(val);
             }
         });
+
+        // Riepilogo iniziale (importo predefinito)
+        fetchQuote(selectedAmount);
 
         // === Live preview ===
         recipientNameInput.addEventListener('input', function() {
@@ -404,6 +464,16 @@
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Elaborazione...</span>';
 
+            // Il totale da pagare deve essere quello mostrato nel riepilogo: se manca (rete lenta)
+            // lo si chiede adesso; senza, non si procede.
+            clearTimeout(quoteTimer);
+            var q = (quote && quote.amount === selectedAmount) ? quote : await fetchQuote(selectedAmount);
+            if (!q) {
+                showError('Non è stato possibile calcolare il totale da pagare. Riprova tra qualche istante.');
+                resetSubmit();
+                return;
+            }
+
             try {
                 var response = await fetch(API_BASE + '/checkout-session', {
                     method: 'POST',
@@ -415,11 +485,18 @@
                         recipientName: recipientName,
                         recipientEmail: recipientEmail,
                         message: message || undefined,
+                        // Quanto mostrato al cliente: il gestionale rifiuta se non coincide col suo calcolo.
+                        expectedIssueFee: q.issueFee,
+                        expectedTotal: q.total,
                     }),
                 });
 
                 var data = await response.json();
 
+                if (response.status === 409) {
+                    // Costo cambiato nel frattempo: si aggiorna il riepilogo e il cliente ricontrolla.
+                    fetchQuote(selectedAmount);
+                }
                 if (!response.ok) {
                     throw new Error(data.error || 'Errore nella creazione del pagamento');
                 }
@@ -432,10 +509,20 @@
                 }
             } catch (err) {
                 showError(err.message || 'Si è verificato un errore. Riprova.');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-lock"></i> <span>Acquista con Carta</span>';
+                resetSubmit();
             }
         });
+
+        function resetSubmit() {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-lock"></i> <span>Acquista con Carta</span>';
+        }
+
+        function escapeHtml(value) {
+            return String(value == null ? '' : value)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
 
         function showError(msg) {
             formError.textContent = msg;
@@ -474,10 +561,15 @@
                     if (data.status === 'completed' && data.giftCard) {
                         var gc = data.giftCard;
                         var amount = parseFloat(gc.initialAmount);
+                        var fee = parseFloat(gc.issueFee) || 0;
                         details.innerHTML =
                             '<div class="gc-success-card">' +
-                            '<div class="gc-success-row"><span>Importo</span><strong>' + formatEuro(amount) + '</strong></div>' +
-                            '<div class="gc-success-row"><span>Destinatario</span><strong>' + gc.recipientName + '</strong></div>' +
+                            '<div class="gc-success-row"><span>' + (fee > 0 ? 'Valore gift card' : 'Importo') + '</span><strong>' + formatEuro(amount) + '</strong></div>' +
+                            (fee > 0
+                                ? '<div class="gc-success-row"><span>Costo di emissione</span><strong>' + formatEuro(fee) + '</strong></div>' +
+                                  '<div class="gc-success-row"><span>Totale pagato</span><strong>' + formatEuro(amount + fee) + '</strong></div>'
+                                : '') +
+                            '<div class="gc-success-row"><span>Destinatario</span><strong>' + escapeHtml(gc.recipientName) + '</strong></div>' +
                             '</div>';
                     } else if (attempts < maxAttempts) {
                         attempts++;

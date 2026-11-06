@@ -1222,6 +1222,19 @@ ul { list-style: none; }
     color: rgba(255, 255, 255, 0.4);
 }
 
+/* Dati obbligatori del venditore (ragione sociale, P.IVA, sede legale) */
+.footer-bottom .footer-legal {
+    margin-top: 6px;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+}
+
+.footer-bottom .footer-legal strong {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.55);
+}
+
 /* === WhatsApp Floating Button === */
 .whatsapp-float {
     position: fixed;
