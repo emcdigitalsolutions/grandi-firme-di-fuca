@@ -1,21 +1,21 @@
-# Grandi Firme di Fucà | Outlet Abbigliamento 0-16 Anni
+# Grandi Firme di Fucà
 
-> Grandi Firme di Fucà - Outlet abbigliamento firmato per bambini e ragazzi da 0 a 16 anni. Due sedi: Racalmuto e Grotte (AG). I migliori brand a prezzi outlet.
+> Negozio di abbigliamento firmato per neonati, bambini e ragazzi da 0 a 16 anni, a prezzi outlet. Due negozi in provincia di Agrigento (Sicilia): Grotte e Racalmuto. Oltre trenta grandi firme, offerte in negozio, gift card online e carta fedeltà digitale.
 
-## Sito ufficiale
-- URL: https://www.grandifirmedifuca.it/
-- Telefono: +3909221978077
-- Venditore: FORTUNA S.R.L. (insegna «Grandi Firme di Fucà»), P.IVA 03111700849, sede legale C.da Calminello snc, 92020 Racalmuto (AG)
+## Negozi
+- Grotte (AG): Viale della Vittoria, 90 – 92020 Grotte – tel. +39 0922 197 8101
+- Racalmuto (AG): Via Garibaldi, 166 – 92020 Racalmuto – tel. +39 0922 197 8077
+- Orari (entrambi): lunedì – sabato 9:15 – 13:00 e 16:30 – 20:15
+- WhatsApp: +39 333 144 1730 · Email: info@grandifirmedifuca.it · Facebook: https://www.facebook.com/grandi.firme.di.fuca.0.16/
 
-## Sezioni / argomenti del sito
-- Chi Siamo
-- I Nostri Brand
-- Le Nostre Collezioni
-- Fuori Tutto
-- Regala una Gift Card
-- I Nostri Negozi
-- News & Aggiornamenti
-- Contattaci
+## Pagine principali
+- [Home](https://www.grandifirmedifuca.it/): vetrina, offerte del momento, marchi, collezioni per età, negozi, domande frequenti, contatti
+- [Gift card](https://www.grandifirmedifuca.it/gift-card.html): buono regalo digitale da 10 a 500 €, pagamento online con Stripe, consegna via email, valido 12 mesi in entrambi i negozi
+- [Carta fedeltà](https://www.grandifirmedifuca.it/fidelity.html): registrazione gratuita, tessera digitale con codice QR, punti a ogni acquisto e buono al raggiungimento della soglia
+- [Privacy Policy](https://www.grandifirmedifuca.it/privacy-policy.html) · [Cookie Policy](https://www.grandifirmedifuca.it/cookie-policy.html) · [Termini di Servizio](https://www.grandifirmedifuca.it/terms-of-service.html)
 
-## Note
-Questo documento riepiloga il sito per assistenti AI e motori di ricerca. Per informazioni sempre aggiornate fare riferimento al sito ufficiale indicato sopra.
+## Approfondimento
+- [Versione estesa per assistenti (marchi, offerte con prezzi, FAQ)](https://www.grandifirmedifuca.it/llms-full.txt)
+
+## Venditore
+FORTUNA S.R.L. (insegna «Grandi Firme di Fucà»), P.IVA 03111700849, sede legale C.da Calminello snc, 92020 Racalmuto (AG).

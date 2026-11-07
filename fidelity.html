@@ -2,496 +2,199 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carta Fedeltà - Grandi Firme di Fucà</title>
-    <meta name="description" content="Registrati al programma fedeltà Grandi Firme. Accumula punti ad ogni acquisto e ottieni sconti esclusivi.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Carta fedeltà Grandi Firme di Fucà · Punti e buoni a ogni acquisto</title>
+    <meta name="description" content="Attiva gratis la carta fedeltà Grandi Firme di Fucà: tessera digitale con codice QR sul telefono, punti a ogni acquisto e buoni da spendere nei negozi di Grotte e Racalmuto.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="author" content="Grandi Firme di Fucà">
     <link rel="canonical" href="https://www.grandifirmedifuca.it/fidelity.html">
+    <meta name="theme-color" content="#14110d">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="it_IT">
+    <meta property="og:site_name" content="Grandi Firme di Fucà">
+    <meta property="og:title" content="Carta fedeltà Grandi Firme di Fucà · Punti e buoni a ogni acquisto">
+    <meta property="og:description" content="Attiva gratis la carta fedeltà Grandi Firme di Fucà: tessera digitale con codice QR sul telefono, punti a ogni acquisto e buoni da spendere nei negozi di Grotte e Racalmuto.">
+    <meta property="og:url" content="https://www.grandifirmedifuca.it/fidelity.html">
+    <meta property="og:image" content="https://www.grandifirmedifuca.it/images/og-grandi-firme-di-fuca.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Carta fedeltà Grandi Firme di Fucà">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Carta fedeltà Grandi Firme di Fucà · Punti e buoni a ogni acquisto">
+    <meta name="twitter:description" content="Attiva gratis la carta fedeltà Grandi Firme di Fucà: tessera digitale con codice QR sul telefono, punti a ogni acquisto e buoni da spendere nei negozi di Grotte e Racalmuto.">
+    <meta name="twitter:image" content="https://www.grandifirmedifuca.it/images/og-grandi-firme-di-fuca.jpg">
+    <meta name="twitter:image:alt" content="Carta fedeltà Grandi Firme di Fucà">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="preload" href="fonts/bodoni-moda-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/cookie-consent.css">
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    <style>
-        /* Fidelity page specific styles */
-        .fidelity-hero {
-            position: relative;
-            padding: 100px 0 50px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            text-align: center;
-            overflow: hidden;
-        }
-        .fidelity-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 50%, rgba(212,168,75,0.08) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 50%, rgba(212,168,75,0.05) 0%, transparent 50%);
-        }
-        .fidelity-hero-content {
-            position: relative;
-            z-index: 1;
-        }
-        .fidelity-hero-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            color: #fff;
-            margin-bottom: 0.5rem;
-        }
-        .fidelity-hero-subtitle {
-            font-family: 'Montserrat', sans-serif;
-            color: #aaa;
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Views */
-        .fidelity-view { display: none; }
-        .fidelity-view.active { display: block; }
-
-        /* Form section */
-        .fidelity-form-section {
-            padding: 60px 0;
-            background: #111;
-        }
-        .fidelity-form-wrapper {
-            max-width: 500px;
-            margin: 0 auto;
-            background: #1a1a1a;
-            border: 1px solid rgba(212,168,75,0.2);
-            border-radius: 12px;
-            padding: 2.5rem;
-        }
-        .fidelity-form-wrapper h3 {
-            font-family: 'Playfair Display', serif;
-            color: #D4A84B;
-            font-size: 1.5rem;
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-        .fidelity-form .form-group {
-            margin-bottom: 1.2rem;
-        }
-        .fidelity-form label {
-            display: block;
-            font-family: 'Montserrat', sans-serif;
-            color: #ccc;
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin-bottom: 0.4rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .fidelity-form input[type="text"],
-        .fidelity-form input[type="email"],
-        .fidelity-form input[type="tel"],
-        .fidelity-form input[type="date"] {
-            width: 100%;
-            padding: 12px 16px;
-            background: #222;
-            border: 1px solid #333;
-            border-radius: 8px;
-            color: #fff;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.95rem;
-            transition: border-color 0.3s;
-            box-sizing: border-box;
-        }
-        .fidelity-form input:focus {
-            outline: none;
-            border-color: #D4A84B;
-        }
-        .fidelity-form .checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 1rem;
-        }
-        .fidelity-form .checkbox-group input[type="checkbox"] {
-            margin-top: 3px;
-            accent-color: #D4A84B;
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-        }
-        .fidelity-form .checkbox-group span {
-            color: #aaa;
-            font-size: 0.82rem;
-            line-height: 1.4;
-        }
-        .fidelity-form .checkbox-group a {
-            color: #D4A84B;
-            text-decoration: underline;
-        }
-        .fidelity-form .form-error {
-            color: #ef4444;
-            font-size: 0.8rem;
-            margin-top: 0.3rem;
-            display: none;
-        }
-        .fidelity-submit-btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #D4A84B, #B8860B);
-            border: none;
-            border-radius: 8px;
-            color: #1a1a1a;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .fidelity-submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(212,168,75,0.3);
-        }
-        .fidelity-submit-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-        .fidelity-global-error {
-            background: rgba(239,68,68,0.1);
-            border: 1px solid rgba(239,68,68,0.3);
-            border-radius: 8px;
-            padding: 12px 16px;
-            color: #ef4444;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            display: none;
-        }
-
-        /* Benefits */
-        .fidelity-benefits {
-            padding: 50px 0;
-            background: #0d0d0d;
-        }
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .benefit-card {
-            text-align: center;
-            padding: 2rem 1.5rem;
-            background: #1a1a1a;
-            border: 1px solid rgba(212,168,75,0.15);
-            border-radius: 10px;
-            transition: border-color 0.3s;
-        }
-        .benefit-card:hover {
-            border-color: rgba(212,168,75,0.4);
-        }
-        .benefit-icon {
-            font-size: 2rem;
-            color: #D4A84B;
-            margin-bottom: 0.8rem;
-        }
-        .benefit-card h4 {
-            font-family: 'Playfair Display', serif;
-            color: #fff;
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-        .benefit-card p {
-            color: #888;
-            font-size: 0.85rem;
-            line-height: 1.5;
-        }
-
-        /* Card view */
-        .fidelity-card-section {
-            padding: 60px 0;
-            background: #111;
-            min-height: 50vh;
-        }
-        .fidelity-card {
-            max-width: 420px;
-            margin: 0 auto;
-            background: linear-gradient(145deg, #1a1a1a 0%, #111 100%);
-            border: 2px solid rgba(212,168,75,0.4);
-            border-radius: 20px;
-            padding: 2.5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .fidelity-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(212,168,75,0.06) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .fidelity-card .card-brand {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.75rem;
-            color: #D4A84B;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 0.5rem;
-        }
-        .fidelity-card .card-title {
-            font-family: 'Playfair Display', serif;
-            color: #fff;
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-        }
-        .fidelity-card .card-qr {
-            background: #fff;
-            padding: 12px;
-            border-radius: 12px;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-        .fidelity-card .card-qr canvas {
-            display: block;
-        }
-        .fidelity-card .card-code {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #D4A84B;
-            letter-spacing: 3px;
-            margin-bottom: 1.5rem;
-        }
-        .fidelity-card .card-name {
-            font-family: 'Montserrat', sans-serif;
-            color: #ccc;
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-        .fidelity-card .card-divider {
-            width: 60%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #D4A84B, transparent);
-            margin: 1.2rem auto;
-        }
-        .fidelity-card .card-points-label {
-            font-family: 'Montserrat', sans-serif;
-            color: #888;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 0.3rem;
-        }
-        .fidelity-card .card-points {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            color: #D4A84B;
-            font-weight: 700;
-            line-height: 1;
-        }
-        .fidelity-card .card-points-suffix {
-            font-size: 1.2rem;
-            color: #888;
-            font-weight: 400;
-            margin-left: 5px;
-        }
-        .fidelity-card-info {
-            max-width: 420px;
-            margin: 1.5rem auto 0;
-            text-align: center;
-        }
-        .fidelity-card-info .bookmark-msg {
-            background: rgba(212,168,75,0.1);
-            border: 1px solid rgba(212,168,75,0.3);
-            border-radius: 10px;
-            padding: 14px 20px;
-            color: #D4A84B;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-        .fidelity-card-info .bookmark-msg i {
-            margin-right: 6px;
-        }
-        .fidelity-card-info .reward-info {
-            color: #888;
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-        .fidelity-card-info .reward-info strong {
-            color: #D4A84B;
-        }
-
-        /* Error view */
-        .fidelity-error-section {
-            padding: 80px 0;
-            background: #111;
-            text-align: center;
-            min-height: 40vh;
-        }
-        .fidelity-error-icon {
-            font-size: 3rem;
-            color: #ef4444;
-            margin-bottom: 1rem;
-        }
-        .fidelity-error-section h2 {
-            font-family: 'Playfair Display', serif;
-            color: #fff;
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-        }
-        .fidelity-error-section p {
-            color: #888;
-            font-size: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        /* Loading spinner */
-        .fidelity-loading {
-            padding: 80px 0;
-            text-align: center;
-        }
-        .fidelity-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid #333;
-            border-top-color: #D4A84B;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto 1rem;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        .fidelity-loading p {
-            color: #888;
-            font-size: 0.9rem;
-        }
-    </style>
+    <script>document.documentElement.className += ' js';</script>
+    <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+  {
+   "@type": "ListItem",
+   "position": 1,
+   "name": "Home",
+   "item": "https://www.grandifirmedifuca.it/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 2,
+   "name": "Carta fedeltà",
+   "item": "https://www.grandifirmedifuca.it/fidelity.html"
+  }
+ ]
+}
+    </script>
 </head>
-<body>
-    <!-- Navigation -->
-    <nav id="navbar" class="scrolled">
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo">
-                <span class="logo-text">Grandi Firme</span>
-                <span class="logo-sub">di Fucà</span>
-            </a>
-            <button class="nav-toggle" id="navToggle" aria-label="Apri menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="index.html#chi-siamo" class="nav-link">Chi Siamo</a></li>
-                <li><a href="index.html#brand" class="nav-link">Brand</a></li>
-                <li><a href="index.html#collezioni" class="nav-link">Collezioni</a></li>
-                <li><a href="index.html#promozioni" class="nav-link">Promozioni</a></li>
-                <li><a href="gift-card.html" class="nav-link">Gift Card</a></li>
-                <li><a href="fidelity.html" class="nav-link active">Carta Fedeltà</a></li>
-                <li><a href="index.html#negozi" class="nav-link">Negozi</a></li>
-                <li><a href="index.html#contatti" class="nav-link">Contatti</a></li>
-            </ul>
-        </div>
-    </nav>
+<body data-nav="inline">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+<symbol id="i-chev-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+<symbol id="i-chev-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h3.5l2 5-2.4 1.5a11 11 0 0 0 5.4 5.4L15 13.5l5 2V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12M12 8H8.5a2 2 0 1 1 0-4C11 4 12 8 12 8zm0 0h3.5a2 2 0 1 0 0-4C13 4 12 8 12 8z"/></symbol>
+<symbol id="i-card" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 10h19M6 15h4"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.3l2.8 2.8L16.2 9.6"/></symbol>
+<symbol id="i-x-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.4v.1"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+<symbol id="i-expand" viewBox="0 0 24 24"><path d="M14 4h6v6M10 20H4v-6M20 4l-6.5 6.5M4 20l6.5-6.5"/></symbol>
+<symbol id="i-cookie" viewBox="0 0 24 24"><path d="M20.8 12.6A9 9 0 1 1 11.4 3.2a3 3 0 0 0 3.8 3.7 3 3 0 0 0 3.6 3.6 3 3 0 0 0 2 2.1z"/><path d="M8.5 9.5v.01M9 15v.01M14 14.5v.01M12 11.5v.01"/></symbol>
+<symbol id="i-route" viewBox="0 0 24 24"><path d="M12 2.8l9.2 9.2-9.2 9.2L2.8 12z"/><path d="M9.5 14v-2.5h5M12.5 9.5l2 2-2 2"/></symbol>
+<symbol id="i-euro" viewBox="0 0 24 24"><path d="M17.5 6.6a6.5 6.5 0 1 0 0 10.8M4 10h9.5M4 14h9.5"/></symbol>
+<symbol id="i-mobile" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18h2"/></symbol>
+<symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3.6 20.4l1.2-4.2A8.6 8.6 0 1 1 8 19.3z"/><path d="M9 8.3c.2-.5.5-.5.8-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.2 0 .5-.1.7l-.5.6c-.1.2-.1.4 0 .6.6 1 1.4 1.8 2.4 2.3.2.1.4.1.6-.1l.6-.7c.2-.2.4-.2.6-.1l1.7.8c.2.1.3.3.3.5v.4c0 .7-.6 1.5-1.6 1.6-.9.1-2.5-.3-4.3-1.8-1.6-1.4-2.4-2.9-2.6-3.9-.2-1 .2-2 .4-2.5z"/></symbol>
+<symbol id="i-facebook" viewBox="0 0 24 24"><path class="ic-fill" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21z"/></symbol>
+<symbol id="i-diamond" viewBox="0 0 12 12"><path class="ic-fill" d="M6 0l3 6-3 6-3-6z"/></symbol>
+</svg>
+<a class="skip-link" href="#main">Vai al contenuto</a>
+<header>
+<nav id="navbar" aria-label="Navigazione principale" class="solid">
+    <div class="nav-container">
+        <a href="./" class="nav-logo" aria-label="Grandi Firme di Fucà, pagina iniziale">
+            <img src="images/logo-grandi-firme-di-fuca-160.webp" width="40" height="41" alt="">
+            <span class="wm"><b>Grandi Firme</b><i>di Fucà</i></span>
+        </a>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="Apri menu" aria-expanded="false" aria-controls="navMenu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="./#offerte" class="nav-link">Offerte</a></li>
+            <li><a href="./#negozio" class="nav-link">Il negozio</a></li>
+            <li><a href="./#collezioni" class="nav-link">Collezioni</a></li>
+            <li><a href="./#negozi" class="nav-link">Negozi</a></li>
+            <li><a href="fidelity.html" class="nav-link active" aria-current="page">Carta fedeltà</a></li>
+            <li><a href="./#contatti" class="nav-link">Contatti</a></li>
+            <li class="nav-cta"><a href="gift-card.html"> Gift card</a></li>
+        </ul>
+    </div>
+</nav>
+</header>
 
-    <!-- Loading view -->
+<main id="main">
+    <!-- Caricamento -->
     <div id="loadingView" class="fidelity-view active">
-        <div class="fidelity-loading">
-            <div class="fidelity-spinner"></div>
-            <p>Caricamento...</p>
+        <div class="fidelity-loading" role="status">
+            <div class="fidelity-spinner" aria-hidden="true"></div>
+            <p>Caricamento…</p>
         </div>
     </div>
 
-    <!-- Registration view -->
+    <!-- Registrazione -->
     <div id="registerView" class="fidelity-view">
-        <section class="fidelity-hero">
-            <div class="fidelity-hero-content">
-                <span class="section-tag">Programma Fedeltà</span>
-                <h1 class="fidelity-hero-title">La tua <span class="gold-text">Carta Fedeltà</span></h1>
-                <p class="fidelity-hero-subtitle">Registrati gratuitamente e accumula punti ad ogni acquisto nei nostri negozi.</p>
+        <section class="fidelity-hero page-hero">
+            <div class="container fidelity-hero-content">
+                <nav aria-label="Percorso"><ol class="breadcrumb"><li><a href="./">Home</a></li><li><span aria-current="page">Carta fedeltà</span></li></ol></nav>
+                <p class="eyebrow light">Programma fedeltà</p>
+                <h1 class="fidelity-hero-title">La tua <em>carta fedeltà</em></h1>
+                <p class="fidelity-hero-subtitle">Registrati gratis e accumula punti a ogni acquisto nei nostri negozi.</p>
             </div>
         </section>
 
-        <section class="fidelity-benefits">
+        <section class="fidelity-benefits section">
             <div class="container">
                 <div class="benefits-grid">
                     <div class="benefit-card">
-                        <div class="benefit-icon"><i class="fas fa-star"></i></div>
-                        <h4>Accumula Punti</h4>
+                        <div class="benefit-icon"><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg></div>
+                        <h2>Accumula punti</h2>
                         <p id="benefitPoints">Guadagna punti ad ogni euro speso nei nostri negozi</p>
                     </div>
                     <div class="benefit-card">
-                        <div class="benefit-icon"><i class="fas fa-gift"></i></div>
-                        <h4>Ottieni Premi</h4>
+                        <div class="benefit-icon"><svg class="ic" aria-hidden="true"><use href="#i-gift"/></svg></div>
+                        <h2>Ottieni premi</h2>
                         <p id="benefitReward">Raggiungi la soglia e ricevi sconti esclusivi</p>
                     </div>
                     <div class="benefit-card">
-                        <div class="benefit-icon"><i class="fas fa-mobile-alt"></i></div>
-                        <h4>Sempre con Te</h4>
-                        <p>Card digitale sul tuo smartphone. Controlla il saldo punti in tempo reale</p>
+                        <div class="benefit-icon"><svg class="ic" aria-hidden="true"><use href="#i-mobile"/></svg></div>
+                        <h2>Sempre con te</h2>
+                        <p>Tessera digitale sul tuo smartphone: controlli il saldo punti quando vuoi.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="fidelity-form-section">
+        <section class="fidelity-form-section section">
             <div class="container">
                 <div class="fidelity-form-wrapper">
-                    <h3>Registrati Ora</h3>
+                    <h2>Registrati <em style="color:var(--gold)">ora</em></h2>
 
-                    <div id="formError" class="fidelity-global-error"></div>
+                    <div id="formError" class="fidelity-global-error" role="alert"></div>
 
                     <form id="fidelityForm" class="fidelity-form" novalidate>
                         <div class="form-group">
                             <label for="firstName">Nome *</label>
-                            <input type="text" id="firstName" name="firstName" required>
+                            <input type="text" id="firstName" name="firstName" autocomplete="given-name" required>
                             <div class="form-error" id="firstNameError"></div>
                         </div>
 
                         <div class="form-group">
                             <label for="lastName">Cognome *</label>
-                            <input type="text" id="lastName" name="lastName" required>
+                            <input type="text" id="lastName" name="lastName" autocomplete="family-name" required>
                             <div class="form-error" id="lastNameError"></div>
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email *</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email" autocomplete="email" required>
                             <div class="form-error" id="emailError"></div>
                         </div>
 
                         <div class="form-group">
                             <label for="phone">Telefono</label>
-                            <input type="tel" id="phone" name="phone">
+                            <input type="tel" id="phone" name="phone" autocomplete="tel">
                         </div>
 
                         <div class="form-group">
-                            <label for="birthDate">Data di Nascita</label>
-                            <input type="date" id="birthDate" name="birthDate">
+                            <label for="birthDate">Data di nascita</label>
+                            <input type="date" id="birthDate" name="birthDate" autocomplete="bday">
                         </div>
 
                         <div class="checkbox-group">
                             <input type="checkbox" id="privacyConsent" name="privacyConsent" required>
-                            <span>Accetto la <a href="privacy-policy.html" target="_blank">Privacy Policy</a> e acconsento al trattamento dei miei dati personali. *</span>
+                            <label for="privacyConsent">Accetto la <a href="privacy-policy.html" target="_blank">Privacy Policy</a> e acconsento al trattamento dei miei dati personali. *</label>
                         </div>
                         <div class="form-error" id="privacyError" style="margin-top:-0.5rem;margin-bottom:0.8rem"></div>
 
                         <div class="checkbox-group">
                             <input type="checkbox" id="marketingConsent" name="marketingConsent">
-                            <span>Acconsento a ricevere comunicazioni promozionali e offerte esclusive via email e SMS.</span>
+                            <label for="marketingConsent">Acconsento a ricevere comunicazioni promozionali e offerte esclusive via email e SMS.</label>
                         </div>
 
-                        <button type="submit" id="submitBtn" class="fidelity-submit-btn">
+                        <button type="submit" id="submitBtn" class="fidelity-submit-btn btn btn-gold btn-lg">
                             <i class="fas fa-id-card"></i> Registrati
                         </button>
                     </form>
@@ -500,12 +203,12 @@
         </section>
     </div>
 
-    <!-- Card view -->
+    <!-- Tessera -->
     <div id="cardView" class="fidelity-view">
-        <section class="fidelity-hero" style="padding-bottom:30px">
-            <div class="fidelity-hero-content">
-                <span class="section-tag">La Tua Tessera</span>
-                <h1 class="fidelity-hero-title">Carta <span class="gold-text">Fedeltà</span></h1>
+        <section class="fidelity-hero page-hero" style="padding-bottom:30px">
+            <div class="container fidelity-hero-content">
+                <p class="eyebrow light">La tua tessera</p>
+                <h1 class="fidelity-hero-title">Carta <em>fedeltà</em></h1>
             </div>
         </section>
 
@@ -518,7 +221,7 @@
                     <div class="card-code" id="cardCode"></div>
                     <div class="card-name" id="cardName"></div>
                     <div class="card-divider"></div>
-                    <div class="card-points-label">Punti Disponibili</div>
+                    <div class="card-points-label">Punti disponibili</div>
                     <div>
                         <span class="card-points" id="cardPoints">0</span>
                         <span class="card-points-suffix">pt</span>
@@ -527,7 +230,7 @@
 
                 <div class="fidelity-card-info">
                     <div class="bookmark-msg" id="bookmarkMsg" style="display:none">
-                        <i class="fas fa-bookmark"></i> Salva questa pagina nei preferiti per controllare i tuoi punti in qualsiasi momento!
+                        Salva questa pagina nei preferiti per controllare i tuoi punti in qualsiasi momento!
                     </div>
                     <div class="reward-info" id="rewardInfo"></div>
                 </div>
@@ -535,73 +238,90 @@
         </section>
     </div>
 
-    <!-- Error view -->
+    <!-- Errore -->
     <div id="errorView" class="fidelity-view">
         <section class="fidelity-error-section">
             <div class="container">
-                <div class="fidelity-error-icon"><i class="fas fa-exclamation-circle"></i></div>
+                <div class="fidelity-error-icon"><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg></div>
                 <h2 id="errorTitle">Tessera Non Trovata</h2>
                 <p id="errorMessage">Il codice inserito non corrisponde a nessuna tessera attiva.</p>
-                <a href="fidelity.html" class="btn btn-primary">Registrati</a>
+                <a href="fidelity.html" class="btn btn-gold">Registrati</a>
             </div>
         </section>
     </div>
+</main>
 
-    <!-- Footer -->
-    <footer id="footer">
-        <div class="footer-top">
-            <div class="container">
-                <div class="footer-grid">
-                    <div class="footer-col">
-                        <div class="footer-logo">
-                            <span class="logo-text">Grandi Firme</span>
-                            <span class="logo-sub">di Fucà</span>
-                        </div>
-                        <p>Outlet abbigliamento firmato per bambini e ragazzi da 0 a 16 anni. I migliori brand a prezzi imbattibili.</p>
-                        <div class="footer-social">
-                            <a href="https://www.facebook.com/grandi.firme.di.fuca.0.16/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        </div>
+<aside class="sartonero" aria-label="Gestionale del negozio">
+    <div class="container">
+        <span>Il nostro negozio è gestito con <strong>Sartonero</strong>, il gestionale per negozi di abbigliamento, personalizzato per Grandi Firme di Fucà.</span>
+        <span><a href="https://sartonero.it/" target="_blank" rel="noopener">Scopri Sartonero</a> <span class="sep" aria-hidden="true">·</span> <a href="https://demo.sartonero.it/login" target="_blank" rel="noopener">Prova la demo</a></span>
+    </div>
+</aside>
+<footer id="footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-brand">
+                    <a href="./" class="nav-logo">
+                        <img src="images/logo-grandi-firme-di-fuca-160.webp" width="40" height="41" alt="" loading="lazy">
+                        <span class="wm"><b>Grandi Firme</b><i>di Fucà</i></span>
+                    </a>
+                    <p>Abbigliamento firmato per bambini e ragazzi da 0 a 16 anni, a prezzi outlet. Due negozi in provincia di Agrigento: Grotte e Racalmuto.</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/grandi.firme.di.fuca.0.16/" target="_blank" rel="noopener" aria-label="Facebook di Grandi Firme di Fucà"><svg class="ic" aria-hidden="true"><use href="#i-facebook"/></svg></a>
+                        <a href="https://wa.me/393331441730" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp"><svg class="ic" aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
                     </div>
-                    <div class="footer-col">
-                        <h4>Link Rapidi</h4>
-                        <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="index.html#brand">Brand</a></li>
-                            <li><a href="gift-card.html">Gift Card</a></li>
-                            <li><a href="fidelity.html">Carta Fedeltà</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Info</h4>
-                        <ul>
-                            <li><a href="index.html#negozi">I Nostri Negozi</a></li>
-                            <li><a href="index.html#contatti">Contatti</a></li>
-                            <li><a href="cookie-policy.html">Cookie Policy</a></li>
-                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Orari</h4>
-                        <p>Lun - Sab</p>
-                        <p><strong>9:15 - 13:00</strong></p>
-                        <p><strong>16:30 - 20:15</strong></p>
-                    </div>
+                </div>
+                <div class="footer-col">
+                    <p class="footer-h">Esplora</p>
+                    <ul>
+                        <li><a href="./#offerte">Offerte del momento</a></li>
+                        <li><a href="./#negozio">Il negozio</a></li>
+                        <li><a href="./#collezioni">Collezioni</a></li>
+                        <li><a href="gift-card.html">Gift card</a></li>
+                        <li><a href="fidelity.html">Carta fedeltà</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <p class="footer-h">Negozi</p>
+                    <p><a href="./#negozi">Grotte</a> · Viale della Vittoria, 90<br><a href="tel:+3909221978101">+39 0922 197 8101</a></p>
+                    <p style="margin-top:12px"><a href="./#negozi">Racalmuto</a> · Via Garibaldi, 166<br><a href="tel:+3909221978077">+39 0922 197 8077</a></p>
+                </div>
+                <div class="footer-col">
+                    <p class="footer-h">Orari</p>
+                    <p>Lunedì – sabato</p>
+                    <p>9:15 – 13:00</p>
+                    <p>16:30 – 20:15</p>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <div class="container">
-                <p>&copy; <script>document.write(new Date().getFullYear())</script> Grandi Firme di Fucà. Tutti i diritti riservati. | <a href="cookie-policy.html">Cookie Policy</a> | <a href="privacy-policy.html">Privacy Policy</a></p>
-                <p class="footer-legal">Grandi Firme di Fucà è un'insegna di <strong>FORTUNA S.R.L.</strong> · P.IVA 03111700849 · Sede legale C.da Calminello snc, 92020 Racalmuto (AG)</p>
-                <a href="https://www.emcdigitalsolutions.it" target="_blank" rel="noopener" title="Progettato e Sviluppato da EMC Digital Solutions" style="margin-top:10px;display:flex;align-items:center;justify-content:center;gap:6px;opacity:0.4;font-size:11px;text-decoration:none;color:inherit;"><span>Progettato e Sviluppato da</span> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" height="18"><defs><linearGradient id="emcG" x1="0" y1="0" x2="120" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#D4A84B"/><stop offset="45%" stop-color="#B8860B"/><stop offset="100%" stop-color="#f0ece2"/></linearGradient><linearGradient id="emcIG" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#D4A84B"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs><path d="M4,4 H24 L32,8 L24,12 H4 A4,4 0 0,1 4,4Z" fill="url(#emcIG)"/><path d="M4,15 H20 L28,19 L20,23 H4 A4,4 0 0,1 4,15Z" fill="url(#emcIG)" opacity="0.85"/><path d="M4,26 H24 L32,30 L24,34 H4 A4,4 0 0,1 4,26Z" fill="url(#emcIG)"/><text x="46" y="27" font-family="'Space Grotesk','Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="20" font-weight="700" fill="url(#emcG)" letter-spacing="3">EMC</text></svg></a>
-                <p style="margin-top:6px;font-size:11px;letter-spacing:0.04em;opacity:0.75;">Gestionale: <a href="https://sartonero.it/" target="_blank" rel="noopener" title="Sartonero, gestionale per negozi di abbigliamento" style="color:#D4A84B;text-decoration:none;">Sartonero</a></p>
-            </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <p>&copy; <span class="js-year">2026</span> Grandi Firme di Fucà. Tutti i diritti riservati.</p>
+            <p class="footer-links"><a href="privacy-policy.html">Privacy Policy</a><a href="cookie-policy.html">Cookie Policy</a><a href="terms-of-service.html">Termini di Servizio</a><a href="changelog.html">Changelog</a><button type="button" id="cookieGear" class="cookie-gear">Preferenze cookie</button></p>
+            <p class="footer-legal">Grandi Firme di Fucà è un'insegna di <strong>FORTUNA S.R.L.</strong> · P.IVA 03111700849 · Sede legale C.da Calminello snc, 92020 Racalmuto (AG)</p>
+            <a href="https://www.emcdigitalsolutions.it" target="_blank" rel="noopener" title="Progettato e Sviluppato da EMC Digital Solutions" class="emc-credit"><span>Progettato e Sviluppato da</span> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" height="18"><defs><linearGradient id="emcG" x1="0" y1="0" x2="120" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#D4A84B"/><stop offset="45%" stop-color="#B8860B"/><stop offset="100%" stop-color="#f0ece2"/></linearGradient><linearGradient id="emcIG" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#D4A84B"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs><path d="M4,4 H24 L32,8 L24,12 H4 A4,4 0 0,1 4,4Z" fill="url(#emcIG)"/><path d="M4,15 H20 L28,19 L20,23 H4 A4,4 0 0,1 4,15Z" fill="url(#emcIG)" opacity="0.85"/><path d="M4,26 H24 L32,30 L24,34 H4 A4,4 0 0,1 4,26Z" fill="url(#emcIG)"/><text x="46" y="27" font-family="'Space Grotesk','Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="20" font-weight="700" fill="url(#emcG)" letter-spacing="3">EMC</text></svg></a>
         </div>
-    </footer>
+    </div>
+</footer>
 
-    <!-- Cookie consent (shared) -->
-    <script src="js/cookie-consent.js"></script>
+<div id="cookieBanner" class="cookie-banner" role="dialog" aria-label="Consenso cookie">
+    <div class="cookie-banner-inner">
+        <div class="cookie-banner-text">
+            Usiamo cookie tecnici necessari al funzionamento del sito e, solo con il tuo consenso, cookie di terze parti per mostrare le mappe dei negozi (Google Maps) e per statistiche di visita (Google Analytics). Puoi accettarli tutti o proseguire con i soli cookie necessari. Dettagli nella <a href="cookie-policy.html">Cookie Policy</a> e nella <a href="privacy-policy.html">Privacy Policy</a>.
+        </div>
+        <div class="cookie-banner-actions">
+            <button type="button" class="cookie-btn cookie-btn-accept" id="cookieAcceptAll">Accetta tutti</button>
+            <button type="button" class="cookie-btn cookie-btn-reject" id="cookieRejectAll">Solo necessari</button>
+        </div>
+    </div>
+</div>
 
+<!-- Cookie consent (shared) -->
+<script src="js/cookie-consent.js"></script>
+<script src="js/main.js" defer></script>
+<script src="js/vendor/qrcode-1.5.1.min.js"></script>
     <script>
     (function() {
         const API_BASE = 'https://magazzino.grandifirmedifuca.it/api/v1/public/fidelity';
@@ -800,5 +520,6 @@
         }
     })();
     </script>
+
 </body>
 </html>

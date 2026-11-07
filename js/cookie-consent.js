@@ -2,6 +2,7 @@
     'use strict';
 
     var STORAGE_KEY = 'gf_cookie_consent';
+    var GA_ID = 'G-ZKNE48DZC5';
     var banner = document.getElementById('cookieBanner');
     var gear = document.getElementById('cookieGear');
 
@@ -18,6 +19,7 @@
         showGear();
         if (consent === 'accepted') {
             loadAllMaps();
+            loadAnalytics();
         }
     }
 
@@ -29,6 +31,7 @@
             hideBanner();
             showGear();
             loadAllMaps();
+            loadAnalytics();
         });
     }
 
@@ -39,6 +42,7 @@
             saveConsent('rejected');
             hideBanner();
             showGear();
+            denyAnalytics();
         });
     }
 
@@ -50,13 +54,15 @@
         });
     }
 
-    // Map placeholder buttons: accept and load single map
+    // Map placeholder buttons: accept and load maps
     document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('map-placeholder-btn')) {
+        var btn = e.target.closest ? e.target.closest('.map-placeholder-btn') : null;
+        if (btn) {
             saveConsent('accepted');
             hideBanner();
             showGear();
             loadAllMaps();
+            loadAnalytics();
         }
     });
 
@@ -95,6 +101,32 @@
         }
     }
 
+    // Google Analytics 4: caricato SOLO dopo il consenso (Consent Mode v2, IP anonimizzato).
+    function loadAnalytics() {
+        if (window.__gfAnalytics) return;
+        window.__gfAnalytics = true;
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = window.gtag || function() { window.dataLayer.push(arguments); };
+        window.gtag('consent', 'default', {
+            analytics_storage: 'granted',
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied'
+        });
+        window.gtag('js', new Date());
+        window.gtag('config', GA_ID, { anonymize_ip: true });
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(s);
+    }
+
+    function denyAnalytics() {
+        if (window.gtag) {
+            window.gtag('consent', 'update', { analytics_storage: 'denied' });
+        }
+    }
+
     function loadAllMaps() {
         var placeholders = document.querySelectorAll('.map-placeholder[data-src]');
         placeholders.forEach(function(ph) {
@@ -104,7 +136,7 @@
             var iframe = document.createElement('iframe');
             iframe.src = src;
             iframe.width = '100%';
-            iframe.height = '250';
+            iframe.height = '280';
             iframe.style.border = '0';
             iframe.setAttribute('allowfullscreen', '');
             iframe.setAttribute('loading', 'lazy');
