@@ -175,11 +175,16 @@ ul { margin: 0; padding: 0; }
     transition: background-color .4s, box-shadow .4s, backdrop-filter .4s, color .4s;
     color: var(--on-dark);
 }
-#navbar.scrolled, #navbar.solid {
+/* Fondo sfocato su un livello a parte: un backdrop-filter sul #navbar diventerebbe il riferimento
+   del menu a tutto schermo (position: fixed) e lo schiaccerebbe nell'altezza della barra. */
+#navbar::before {
+    content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
     background: rgba(20, 17, 13, .9);
     -webkit-backdrop-filter: saturate(140%) blur(12px); backdrop-filter: saturate(140%) blur(12px);
     box-shadow: 0 1px 0 rgba(214, 178, 110, .18);
+    opacity: 0; transition: opacity .4s;
 }
+#navbar.scrolled::before, #navbar.solid::before { opacity: 1; }
 .nav-container { height: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; position: relative; z-index: 2; }
 .nav-logo img { width: 40px; height: 41px; border-radius: 8px; box-shadow: 0 0 0 1px rgba(214,178,110,.35); }
