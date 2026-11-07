@@ -131,7 +131,7 @@
                     <div class="benefit-card">
                         <div class="benefit-icon"><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg></div>
                         <h2>Accumula punti</h2>
-                        <p id="benefitPoints">Guadagna punti ad ogni euro speso nei nostri negozi</p>
+                        <p id="benefitPoints">Guadagna punti a ogni acquisto nei nostri negozi</p>
                     </div>
                     <div class="benefit-card">
                         <div class="benefit-icon"><svg class="ic" aria-hidden="true"><use href="#i-gift"/></svg></div>
@@ -350,6 +350,19 @@
             showView(errorView);
         }
 
+        // Regola di accumulo: testo pronto dall'API (earnRuleText, es. «1 punto ogni 20 € di spesa»);
+        // con un'API più vecchia si ricostruisce come prima da pointsPerEuro.
+        function earnRule(f) {
+            if (f.earnRuleText) return f.earnRuleText;
+            return f.pointsPerEuro + ' punt' + (f.pointsPerEuro === 1 ? 'o' : 'i') + ' per ogni euro speso';
+        }
+
+        function escapeHtml(t) {
+            return String(t).replace(/[&<>"']/g, function(c) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+            });
+        }
+
         function formatRewardType(type, value) {
             if (type === 'SCONTO_PERCENTUALE') return 'uno sconto del ' + value + '%';
             if (type === 'SCONTO_FISSO') return 'uno sconto di \u20AC' + value.toFixed(2).replace('.', ',');
@@ -374,7 +387,7 @@
             if (data.fidelity) {
                 var infoEl = document.getElementById('rewardInfo');
                 infoEl.innerHTML =
-                    'Guadagni <strong>' + data.fidelity.pointsPerEuro + ' punt' + (data.fidelity.pointsPerEuro === 1 ? 'o' : 'i') + '</strong> per ogni euro speso.<br>' +
+                    'Guadagni <strong>' + escapeHtml(earnRule(data.fidelity)) + '</strong>.<br>' +
                     'A <strong>' + data.fidelity.rewardThreshold + ' punti</strong> ricevi ' + formatRewardType(data.fidelity.rewardType, data.fidelity.rewardValue) + '.';
             }
 
@@ -413,7 +426,7 @@
                 // Update benefit texts with actual config values
                 if (config.fidelity) {
                     document.getElementById('benefitPoints').textContent =
-                        'Guadagna ' + config.fidelity.pointsPerEuro + ' punt' + (config.fidelity.pointsPerEuro === 1 ? 'o' : 'i') + ' per ogni euro speso nei nostri negozi';
+                        'Guadagna ' + earnRule(config.fidelity) + ' nei nostri negozi';
                     document.getElementById('benefitReward').textContent =
                         'A ' + config.fidelity.rewardThreshold + ' punti ricevi ' + formatRewardType(config.fidelity.rewardType, config.fidelity.rewardValue);
                 }
