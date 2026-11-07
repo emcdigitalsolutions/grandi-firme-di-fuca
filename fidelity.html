@@ -370,6 +370,13 @@
             return 'un premio';
         }
 
+        // Premio: testo pronto dall'API (rewardText, es. «uno sconto del 20% sui capi a prezzo pieno
+        // o scontati fino al 50%»); con un'API più vecchia si ricostruisce da rewardType/rewardValue.
+        function rewardText(f) {
+            if (f.rewardText) return f.rewardText;
+            return formatRewardType(f.rewardType, f.rewardValue);
+        }
+
         function renderCard(data) {
             document.getElementById('cardBrand').textContent = data.tenant.name.toUpperCase();
             document.getElementById('cardCode').textContent = data.fidelityCode;
@@ -388,7 +395,7 @@
                 var infoEl = document.getElementById('rewardInfo');
                 infoEl.innerHTML =
                     'Guadagni <strong>' + escapeHtml(earnRule(data.fidelity)) + '</strong>.<br>' +
-                    'A <strong>' + data.fidelity.rewardThreshold + ' punti</strong> ricevi ' + formatRewardType(data.fidelity.rewardType, data.fidelity.rewardValue) + '.';
+                    'A <strong>' + data.fidelity.rewardThreshold + ' punti</strong> ricevi ' + escapeHtml(rewardText(data.fidelity)) + '.';
             }
 
             showView(cardView);
@@ -428,7 +435,7 @@
                     document.getElementById('benefitPoints').textContent =
                         'Guadagna ' + earnRule(config.fidelity) + ' nei nostri negozi';
                     document.getElementById('benefitReward').textContent =
-                        'A ' + config.fidelity.rewardThreshold + ' punti ricevi ' + formatRewardType(config.fidelity.rewardType, config.fidelity.rewardValue);
+                        'A ' + config.fidelity.rewardThreshold + ' punti ricevi ' + rewardText(config.fidelity);
                 }
                 showView(registerView);
             })
