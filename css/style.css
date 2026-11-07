@@ -245,7 +245,7 @@ ul { margin: 0; padding: 0; }
 .hero h1 { font-size: clamp(2.9rem, 12vw, 6.2rem); line-height: .95; font-weight: 500; letter-spacing: -.025em; margin: 0 0 1.4rem; }
 .hero h1 .l1 { display: block; }
 .hero h1 .l2 { display: block; font-style: italic; font-weight: 400; color: var(--gold); padding-left: .6em; }
-.hero .lead { margin-bottom: 2rem; }
+.hero .lead { margin-bottom: 2rem; color: var(--on-dark-muted); }
 .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
 @media (max-width: 599px) { .hero-ctas .btn { flex: 1 1 100%; } }
 .hero-meta { display: flex; flex-wrap: wrap; gap: 10px 26px; margin: 2.2rem 0 0; padding: 1.4rem 0 0; border-top: 1px solid rgba(214,178,110,.2); list-style: none; font-size: .88rem; color: var(--on-dark-muted); }
