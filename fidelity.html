@@ -151,6 +151,7 @@
             <div class="container">
                 <div class="fidelity-form-wrapper">
                     <h2>Registrati <em style="color:var(--gold)">ora</em></h2>
+                    <p class="fidelity-welcome-note" id="welcomeNote" hidden></p>
 
                     <div id="formError" class="fidelity-global-error" role="alert"></div>
 
@@ -198,6 +199,18 @@
                             <i class="fas fa-id-card"></i> Registrati
                         </button>
                     </form>
+
+                    <!-- «Hai già la carta?»: link della tessera via email (visibile solo se il negozio lo permette) -->
+                    <div class="fidelity-recover" id="recoverBox" hidden>
+                        <h3 class="fidelity-recover-title">Hai già la carta?</h3>
+                        <p class="fidelity-recover-text">Scrivi l'email con cui ti sei iscritto: ti mandiamo il link della tua tessera digitale.</p>
+                        <form id="recoverForm" class="fidelity-recover-form" novalidate>
+                            <label for="recoverEmail" class="sr-only">La tua email</label>
+                            <input type="email" id="recoverEmail" name="recoverEmail" autocomplete="email" placeholder="La tua email" required>
+                            <button type="submit" id="recoverBtn" class="btn btn-ghost light">Inviami il link</button>
+                        </form>
+                        <p class="fidelity-recover-msg" id="recoverMsg" role="status" aria-live="polite"></p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -232,6 +245,7 @@
                     <div class="bookmark-msg" id="bookmarkMsg" style="display:none">
                         Salva questa pagina nei preferiti per controllare i tuoi punti in qualsiasi momento!
                     </div>
+                    <div class="welcome-info" id="welcomeInfo" hidden></div>
                     <div class="reward-info" id="rewardInfo"></div>
                 </div>
             </div>
@@ -437,6 +451,13 @@
                     document.getElementById('benefitReward').textContent =
                         'A ' + config.fidelity.rewardThreshold + ' punti ricevi ' + rewardText(config.fidelity);
                 }
+                // Regalo di benvenuto e «Hai già la carta?»: solo se l'API li offre (aggiunte 8/11/2026).
+                if (config.welcomeRewardText) {
+                    var note = document.getElementById('welcomeNote');
+                    note.innerHTML = '<strong>Regalo di benvenuto:</strong> ' + escapeHtml(config.welcomeRewardText) + '.';
+                    note.hidden = false;
+                }
+                if (config.cardRecovery === true) document.getElementById('recoverBox').hidden = false;
                 showView(registerView);
             })
             .catch(function() {
@@ -519,6 +540,21 @@
                 document.getElementById('bookmarkMsg').style.display = 'block';
 
                 renderCard(data);
+
+                // Regalo di benvenuto ricevuto ed email con la tessera in arrivo
+                var parts = [];
+                if (data.welcomeReward) {
+                    parts.push('<strong>Il tuo regalo di benvenuto:</strong> ' + escapeHtml(data.welcomeReward.text) + '.' +
+                        (data.welcomeReward.code ? '<br>Codice del buono: <strong class="welcome-code">' + escapeHtml(data.welcomeReward.code) + '</strong> (mostralo in cassa).' : ''));
+                }
+                if (data.welcomeEmail) {
+                    parts.push("Ti abbiamo mandato un'email con la tessera" + (data.welcomeReward && data.welcomeReward.code ? ' e il buono' : '') + ': controlla anche la cartella spam.');
+                }
+                if (parts.length) {
+                    var wi = document.getElementById('welcomeInfo');
+                    wi.innerHTML = parts.join('<br>');
+                    wi.hidden = false;
+                }
             })
             .catch(function(err) {
                 submitBtn.disabled = false;
@@ -526,6 +562,44 @@
                 var msg = (err && err.error) || 'Errore durante la registrazione. Riprova.';
                 formError.textContent = msg;
                 formError.style.display = 'block';
+            });
+        });
+
+        // «Hai già la carta?»: risposta sempre uguale, che l'email sia iscritta o no
+        var recoverForm = document.getElementById('recoverForm');
+        recoverForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var input = document.getElementById('recoverEmail');
+            var btn = document.getElementById('recoverBtn');
+            var msg = document.getElementById('recoverMsg');
+            var value = input.value.trim();
+            msg.className = 'fidelity-recover-msg';
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                msg.textContent = 'Scrivi un indirizzo email valido.';
+                msg.classList.add('is-error');
+                input.focus();
+                return;
+            }
+            btn.disabled = true;
+            btn.textContent = 'Invio in corso...';
+            fetch(API_BASE + '/recover', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-Tenant-Domain': 'www.grandifirmedifuca.it' },
+                body: JSON.stringify({ email: value })
+            })
+            .then(function(res) { return res.json().then(function(b) { if (!res.ok) throw b; return b; }); })
+            .then(function(b) {
+                msg.textContent = b.message;
+                msg.classList.add('is-ok');
+                recoverForm.reset();
+            })
+            .catch(function(err) {
+                msg.textContent = (err && err.error) || 'Invio non riuscito. Riprova tra qualche minuto o chiedi in negozio.';
+                msg.classList.add('is-error');
+            })
+            .then(function() {
+                btn.disabled = false;
+                btn.textContent = 'Inviami il link';
             });
         });
 

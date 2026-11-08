@@ -739,6 +739,23 @@ a.c-card:hover { border-color: var(--gold-2); transform: translateY(-3px); box-s
 .fidelity-form .form-error { color: #ffb3ab; font-size: .84rem; display: none; }
 .fidelity-global-error { background: rgba(220,53,69,.16); border-radius: 10px; padding: 12px 16px; color: #ffb3ab; font-size: .92rem; margin-bottom: 1rem; display: none; }
 .fidelity-submit-btn { width: 100%; margin-top: 8px; }
+.fidelity-welcome-note { text-align: center; background: rgba(214,178,110,.1); border: 1px solid rgba(214,178,110,.3); border-radius: 12px; padding: 12px 16px; color: var(--on-dark); font-size: .95rem; margin: -.4rem 0 1.2rem; }
+.fidelity-welcome-note strong { color: var(--gold); font-weight: 500; }
+.fidelity-recover { margin-top: 28px; padding-top: 24px; border-top: 1px solid rgba(214,178,110,.2); text-align: center; }
+.fidelity-recover-title { font-family: var(--font-display); font-size: 1.35rem; margin-bottom: 6px; }
+.fidelity-recover-text { color: var(--on-dark-muted); font-size: .92rem; margin-bottom: 14px; }
+.fidelity-recover-form { display: grid; gap: 10px; }
+@media (min-width: 520px) { .fidelity-recover-form { grid-template-columns: 1fr auto; } }
+.fidelity-recover-form input { width: 100%; min-height: 52px; padding: 13px 16px; border-radius: 12px; border: 1px solid rgba(243,236,224,.18); background: rgba(255,255,255,.04); color: var(--on-dark); color-scheme: dark; }
+.fidelity-recover-form input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(214,178,110,.18); }
+.fidelity-recover-form .btn { min-height: 52px; }
+.fidelity-recover-msg { font-size: .9rem; margin-top: 10px; min-height: 1.2em; }
+.fidelity-recover-msg.is-ok { color: var(--gold); }
+.fidelity-recover-msg.is-error { color: #ffb3ab; }
+.fidelity-card-info .welcome-info { background: rgba(214,178,110,.1); border: 1px solid rgba(214,178,110,.3); border-radius: 12px; padding: 14px 18px; color: var(--on-dark); font-size: .92rem; line-height: 1.6; margin-bottom: 14px; }
+.fidelity-card-info .welcome-info strong { color: var(--gold); font-weight: 500; }
+.fidelity-card-info .welcome-code { letter-spacing: .12em; }
+[hidden] { display: none !important; }
 .fidelity-card-section { background: var(--ink); padding: clamp(48px, 8vw, 90px) 0; }
 .fidelity-card {
     position: relative; max-width: 420px; margin: 0 auto; padding: 34px 28px; text-align: center; overflow: hidden; border-radius: 26px; color: var(--on-dark);
