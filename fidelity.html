@@ -532,6 +532,20 @@
                 return res.json();
             })
             .then(function(data) {
+                // Negozio con invio email: risposta 202 identica per email nuove e già iscritte
+                // (non rivela chi è cliente); la tessera arriva solo per email.
+                if (!data.fidelityCode) {
+                    var regForm = document.getElementById('fidelityForm');
+                    regForm.style.display = 'none';
+                    var done = document.createElement('p');
+                    done.className = 'fidelity-welcome-note';
+                    done.setAttribute('role', 'status');
+                    done.style.cssText = 'font-size:1.1rem;line-height:1.6;padding:18px;border:2px solid currentColor;border-radius:10px;text-align:center';
+                    done.textContent = data.message || 'Controlla la tua email: ti abbiamo mandato il link della tua carta fedeltà. Se non la trovi, guarda anche nella cartella spam.';
+                    regForm.parentNode.insertBefore(done, regForm);
+                    done.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    return;
+                }
                 // Update URL to bookmarkable card URL
                 var newUrl = window.location.pathname + '?code=' + data.fidelityCode;
                 window.history.replaceState({}, '', newUrl);
