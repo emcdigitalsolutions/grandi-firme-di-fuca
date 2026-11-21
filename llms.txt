@@ -9,7 +9,7 @@
 - WhatsApp: +39 333 144 1730 · Email: info@grandifirmedifuca.it · Facebook: https://www.facebook.com/grandi.firme.di.fuca.0.16/ · Instagram: https://www.instagram.com/grandifirmedifuca/
 
 ## Pagine principali
-- [Home](https://www.grandifirmedifuca.it/): vetrina, offerte del momento, marchi, collezioni per età, negozi, domande frequenti, contatti
+- [Home](https://www.grandifirmedifuca.it/): promozione Black Friday (50% + ulteriore 20% sul prezzo già scontato, in negozio), vetrina, offerte del momento, marchi, collezioni per età, negozi, domande frequenti, contatti
 - [Gift card](https://www.grandifirmedifuca.it/gift-card.html): buono regalo digitale da 10 a 500 €, pagamento online con Stripe, consegna via email, valido 12 mesi in entrambi i negozi
 - [Carta fedeltà](https://www.grandifirmedifuca.it/fidelity.html): registrazione gratuita, tessera digitale con codice QR, punti a ogni acquisto e buono al raggiungimento della soglia
 - [Privacy Policy](https://www.grandifirmedifuca.it/privacy-policy.html) · [Cookie Policy](https://www.grandifirmedifuca.it/cookie-policy.html) · [Termini di Servizio](https://www.grandifirmedifuca.it/terms-of-service.html)

@@ -392,6 +392,30 @@ ul { margin: 0; padding: 0; }
 @media (max-width: 599px) { .xmas-ctas .btn { flex: 1 1 100%; } }
 @media (min-width: 900px) { .xmas-grid { grid-template-columns: .9fr 1.1fr; } }
 
+/* ---------- Black Friday (stagionale: togliere a fine promozione) ---------- */
+.bf {
+    position: relative; overflow: hidden;
+    padding: calc(var(--nav-h) + clamp(18px, 3.5vw, 40px)) 0 clamp(48px, 7vw, 84px);
+    background: var(--ink);
+    background-image: radial-gradient(80% 60% at 50% 0%, rgba(214,178,110,.16), transparent 65%);
+    border-bottom: 1px solid rgba(214,178,110,.22);
+}
+.bf-grid { display: grid; gap: clamp(26px, 4vw, 44px); align-items: center; }
+.bf-visual { width: min(100%, 540px); justify-self: center; }
+.bf-media { position: relative; display: block; width: 100%; padding: 0; border: 1px solid rgba(214,178,110,.45); border-radius: 16px; overflow: hidden; background: var(--ink-2); cursor: zoom-in; box-shadow: 0 28px 70px -24px rgba(0,0,0,.85); transition: transform .4s var(--ease), box-shadow .4s var(--ease); }
+.bf-media:hover { transform: translateY(-3px); box-shadow: 0 34px 80px -24px rgba(0,0,0,.9), 0 0 0 1px rgba(214,178,110,.6); }
+.bf-media img { display: block; width: 100%; height: auto; aspect-ratio: 1; }
+.bf-copy { max-width: 560px; }
+.bf-copy .display { margin-bottom: .9rem; }
+.bf-copy .lead strong { color: var(--gold); font-weight: 600; }
+.bf-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 1.6rem; }
+.bf-note { margin: 1.2rem 0 0; font-size: .8rem; line-height: 1.55; color: var(--on-dark-muted); opacity: .85; }
+@media (max-width: 599px) { .bf-ctas .btn { flex: 1 1 100%; } }
+@media (min-width: 900px) { .bf-grid { grid-template-columns: minmax(0, 540px) 1fr; } }
+/* La sezione Black Friday sta sopra la vetrina: la vetrina non deve più lasciare spazio alla barra */
+.bf + .hero { padding-top: clamp(56px, 8vw, 96px); }
+@media (min-width: 900px) { .bf + .hero { min-height: 0; } }
+
 /* ---------- Il negozio / Chi siamo ---------- */
 .about-grid { display: grid; gap: clamp(48px, 7vw, 96px); align-items: center; }
 .about-visual { position: relative; width: min(100%, 520px); justify-self: center; }
