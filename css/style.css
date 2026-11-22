@@ -526,6 +526,23 @@ ul { margin: 0; padding: 0; }
 .news-link:hover { text-decoration: underline; }
 @media (min-width: 800px) { .news-grid { grid-template-columns: repeat(3, 1fr); } }
 
+/* ---------- Recensioni ---------- */
+.rev-score { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin: 14px 0 0; color: var(--on-dark-muted); }
+.rev-score b { color: var(--on-dark); font-weight: 500; }
+.rev-stars { display: inline-flex; gap: 3px; margin: 0; color: var(--gold); }
+.rev-stars .ic { width: 16px; height: 16px; fill: currentColor; }
+.rev-grid { display: grid; gap: 18px; }
+.rev-card { margin: 0; background: var(--ink-2); border: 1px solid rgba(214,178,110,.18); border-radius: var(--radius); padding: 24px 22px; display: flex; flex-direction: column; gap: 14px; }
+.rev-card blockquote { margin: 0; flex: 1; }
+.rev-card blockquote p { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 1.1rem; line-height: 1.45; color: var(--on-dark); overflow-wrap: anywhere; }
+.rev-card figcaption { display: flex; flex-direction: column; gap: 2px; font-size: .86rem; }
+.rev-card figcaption b { font-weight: 500; color: var(--gold); }
+.rev-card figcaption span { color: var(--on-dark-muted); font-size: .78rem; letter-spacing: .04em; }
+.rev-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: clamp(28px, 5vw, 44px); }
+.rev-note { text-align: center; margin: 18px 0 0; font-size: .8rem; color: var(--on-dark-muted); }
+@media (min-width: 700px) { .rev-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .rev-grid { grid-template-columns: repeat(4, 1fr); } }
+
 /* ---------- FAQ ---------- */
 .faq { max-width: 860px; margin: 0 auto; }
 .faq details { border-bottom: 1px solid var(--line); }
